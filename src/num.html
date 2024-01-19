@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Drawing</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body bgcolor="black">
+    <button onclick="resize_b()">Big Size</button><button onclick="resize_s()">Small Size</button>
+    <canvas id="drawingCanvas" style="background-color: white"></canvas>
+    <br>
+    Data: 
+    <input id="data" style="width: 100%"></input>
+    <script>
+        function resize_b(){
+            size = 2;
+            canvas.width = 280 * size
+            canvas.height = 280 * size
+            cellSize = canvas.width / gridSize;
+            gridSize = 56;
+        }
+        function resize_s(){
+            size = 1;
+            canvas.width = 280 * size
+            canvas.height = 280 * size
+            cellSize = canvas.width / gridSize;
+            gridSize = 28;
+        }
+
+
+        size = 1
+        
+        canvas = document.getElementById('drawingCanvas');
+        canvas.width = 280 * size
+        canvas.height = 280 * size
+        ctx = canvas.getContext('2d');
+        gridSize = 28;
+        cellSize = canvas.width / gridSize;
+        let drawing = false;
+        grid = []
+
+        function getMousePos(canvas, event) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        }
+
+        function draw(x, y) {
+            const cellX = Math.floor(x / cellSize);
+            const cellY = Math.floor(y / cellSize);
+            ctx.fillStyle = 'rgba(0,0,0,0.95)';
+            ctx.fillRect(cellX * cellSize, cellY * cellSize, cellSize, cellSize);
+            ctx.fillStyle = 'rgba(0,0,0,0.8)';
+            ctx.fillRect((cellX - 1) * cellSize, (cellY - 1) * cellSize, cellSize * 3, cellSize * 3);
+        }
+
+        function startDrawing(event) {
+            drawing = true;
+            draw(event.pageX - canvas.offsetLeft, event.pageY - canvas.offsetTop);
+        }
+        
+        function save(){
+         
+         for (var y = 0; y < 28; y++) {
+  for (var x = 0; x < 28; x++) {
+    // 获取当前像素的颜色数据
+    var pixelData = ctx.getImageData(size*10*x, size*10*y, 1, 1).data;
+    // 将灰度值存入数组
+    grid.push(pixelData[3]/255);
+  }
+  
+        }
+        }
+
+        function stopDrawing() {
+            drawing = false;
+            save()
+            document.getElementById('data').value = JSON.stringify(grid).split("[")[1].split("]")[0];
+            grid = []
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            grid.fill(0);
+        }
+
+        function drawIfDrawing(event) {
+            if (!drawing) return;
+            draw(event.pageX - canvas.offsetLeft, event.pageY - canvas.offsetTop);
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mousemove', drawIfDrawing);
+        canvas.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            startDrawing(event.touches[0]);
+        }, { passive: false });
+        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('touchmove', (event) => {
+            event.preventDefault();
+            drawIfDrawing(event.touches[0]);
+        }, { passive: false });
+    </script>
+</body>
+</html>
