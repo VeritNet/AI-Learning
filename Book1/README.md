@@ -1,4 +1,5 @@
 # 开始学习 BINKLINGS AI Learning
+<h3 style="color: red">提示：本书后期已发现代码中包含一些错误，且修改重新上传工作量较大，需要时间，代码部分仅供参考</h3>
 
 [BINKLINGS AI Learning 第一册](./zh_BINKLINGS%20AI%20learning%201.md)
 点击上方链接可以进行在线阅读，或者你也可以选择[点击此处下载](./zh_BINKLINGS%20AI%20learning%201.pdf)本书阅读。
