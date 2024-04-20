@@ -9,7 +9,7 @@
 
 using namespace std;
 
-//Ëæ»úÉú³É-0.5ÖÁ0.5Êı×÷ÎªÃ¿¸ö³õÊ¼È¨ÖØºÍÆ«ÖÃ
+//éšæœºç”Ÿæˆ-0.5è‡³0.5æ•°ä½œä¸ºæ¯ä¸ªåˆå§‹æƒé‡å’Œåç½®
 std::vector<double> generateVector(int length) {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -21,83 +21,36 @@ std::vector<double> generateVector(int length) {
     return result;
 }
 
-//½«Éñ¾­ÍøÂçÄ£ĞÍÈ¨ÖØºÍÆ«ÖÃ±£´æµ½ÎÄ¼ş
-void saveNetwork(const std::vector<std::vector<std::vector<std::vector<double>>>>& network, const std::string& filename) {
-    std::ofstream file(filename, std::ios::binary);
-    if (file.is_open()) {
-        //»ñÈ¡ËÄÎ¬ vector µÄÎ¬¶ÈĞÅÏ¢
-        std::size_t dim1 = network.size();
-        std::size_t dim2 = network[0].size();
-        std::size_t dim3 = network[0][0].size();
-        std::size_t dim4 = network[0][0][0].size();
-
-        //Ğ´ÈëÎ¬¶ÈĞÅÏ¢
-        file.write(reinterpret_cast<const char*>(&dim1), sizeof(dim1));
-        file.write(reinterpret_cast<const char*>(&dim2), sizeof(dim2));
-        file.write(reinterpret_cast<const char*>(&dim3), sizeof(dim3));
-        file.write(reinterpret_cast<const char*>(&dim4), sizeof(dim4));
-
-        //Ğ´ÈëÊı¾İ£¨¶ş½øÖÆ£©
-        for (const auto& vec1 : network) {
-            for (const auto& vec2 : vec1) {
-                for (const auto& vec3 : vec2) {
-                    file.write(reinterpret_cast<const char*>(vec3.data()), dim4 * sizeof(double));
-                }
-            }
-        }
-
-        file.close();
-        std::cout << "Network saved to " << filename << std::endl;
-    } else {
-        std::cerr << "Unable to open file: " << filename << std::endl;
-    }
+//å°†ç¥ç»ç½‘ç»œæ¨¡å‹æƒé‡å’Œåç½®ä¿å­˜åˆ°æ–‡ä»¶
+void saveNetwork(const std::vector<std::vector<std::vector<std::vector<double>>>>& tensor, const std::string& filename) {
+	std::ofstream out(filename, std::ios::binary);
+	for (const auto& three_dim : tensor) {
+		for (const auto& two_dim : three_dim) {
+			for (const auto& one_dim : two_dim) {
+				for (const double& value : one_dim) {
+					out.write(reinterpret_cast<const char*>(&value), sizeof(double));
+				}
+			}
+		}
+	}
+	out.close();
 }
 
-//´Ó¶ş½øÖÆÊı¾İ¶ÁÈ¡È¨ÖØÆ«ÖÃ²ÎÊı
-std::vector<std::vector<std::vector<std::vector<double>>>> loadNetwork(const std::string& filename) {
-    std::vector<std::vector<std::vector<std::vector<double>>>> network;
-
-    std::ifstream file(filename, std::ios::binary);
-    if (file.is_open()) {
-        //¶ÁÈ¡Î¬¶ÈĞÅÏ¢
-        std::size_t dim1, dim2, dim3, dim4;
-        file.read(reinterpret_cast<char*>(&dim1), sizeof(dim1));
-        file.read(reinterpret_cast<char*>(&dim2), sizeof(dim2));
-        file.read(reinterpret_cast<char*>(&dim3), sizeof(dim3));
-        file.read(reinterpret_cast<char*>(&dim4), sizeof(dim4));
-
-        //µ÷Õû vector ´óĞ¡
-        network.resize(dim1);
-        for (auto& vec1 : network) {
-            vec1.resize(dim2);
-            for (auto& vec2 : vec1) {
-                vec2.resize(dim3);
-                for (auto& vec3 : vec2) {
-                    vec3.resize(dim4);
-                }
-            }
-        }
-
-        //¶ÁÈ¡Êı¾İ
-        for (auto& vec1 : network) {
-            for (auto& vec2 : vec1) {
-                for (auto& vec3 : vec2) {
-                    file.read(reinterpret_cast<char*>(vec3.data()), dim4 * sizeof(double));
-                }
-            }
-        }
-
-        file.close();
-        std::cout << "Network loaded from " << filename << std::endl;
-    }
-    else {
-        std::cerr << "Unable to open file: " << filename << std::endl;
-    }
-
-    return network;
+void loadNetwork(const std::string& filename, std::vector<std::vector<std::vector<std::vector<double>>>>& tensor) {
+	std::ifstream in(filename, std::ios::binary);
+	for (auto& three_dim : tensor) {
+		for (auto& two_dim : three_dim) {
+			for (auto& one_dim : two_dim) {
+				for (double& value : one_dim) {
+					in.read(reinterpret_cast<char*>(&value), sizeof(double));
+				}
+			}
+		}
+	}
+	in.close();
 }
 
-//»ñÈ¡»Ò¶ÈÎÄ±¾Êı¾İ²¢½âÎöÎªvector
+//è·å–ç°åº¦æ–‡æœ¬æ•°æ®å¹¶è§£æä¸ºvector
 vector<double> getData(std::string path) {
     std::ifstream file(path);
     if (!file.is_open()) {
@@ -122,7 +75,7 @@ vector<double> getData(std::string path) {
 }
 
 
-//¿ª·¢µ÷ÓÃ-´òÓ¡ÏòÁ¿
+//å¼€å‘è°ƒç”¨-æ‰“å°å‘é‡
 void pv(const std::vector<double>& vec) {
     std::cout << "[";
     for (std::size_t i = 0; i < vec.size(); ++i) {
@@ -134,16 +87,16 @@ void pv(const std::vector<double>& vec) {
     std::cout << "]" << std::endl;
 }
 
-//È«¾Ö±äÁ¿
-std::vector<std::vector<std::vector<std::vector<double>>>> network;//Ä£ĞÍÈ¨ÖØºÍÆ«ÖÃ
-std::vector<std::vector<double>> networkn;//ËùÓĞ¼¤»îÖµ
-std::vector<std::vector<double>> networkb;//ËùÓĞ¼¤»îÇ°µÄwx+bµÄÖµ
-double rate;//Ñ§Ï°ÂÊ
-double aim;//Ä¿±êËğÊ§Öµ
+//å…¨å±€å˜é‡
+std::vector<std::vector<std::vector<std::vector<double>>>> network;//æ¨¡å‹æƒé‡å’Œåç½®
+std::vector<std::vector<double>> networkn;//æ‰€æœ‰æ¿€æ´»å€¼
+std::vector<std::vector<double>> networkb;//æ‰€æœ‰æ¿€æ´»å‰çš„wx+bçš„å€¼
+double rate;//å­¦ä¹ ç‡
+double aim;//ç›®æ ‡æŸå¤±å€¼
 
-//Ò»¸öÒş²Ø²ãÉñ¾­Ôª
+//ä¸€ä¸ªéšè—å±‚ç¥ç»å…ƒ
 vector<double> neuron(std::vector<double> w, std::vector<double> x, double b) {
-    //¼¤»îº¯Êı-ELU
+    //æ¿€æ´»å‡½æ•°-ELU
     auto elu = [](double x) {
         if (x >= 0) {
             return x;
@@ -153,7 +106,7 @@ vector<double> neuron(std::vector<double> w, std::vector<double> x, double b) {
         }
     };
 
-    //ÇóºÍ¡Æwx+b
+    //æ±‚å’Œâˆ‘wx+b
     auto sigma = [&w, &x, b]() {
         double sum = 0;
         for (int i = 0; i < w.size(); ++i) {
@@ -162,14 +115,14 @@ vector<double> neuron(std::vector<double> w, std::vector<double> x, double b) {
         return sum + b;
     };
 
-    double sum = sigma();//¼¤»îÇ°µÄÖµ
+    double sum = sigma();//æ¿€æ´»å‰çš„å€¼
 
     return { sum,elu(sum) };
 }
 
-//Ò»¸öÊä³ö²ãÉñ¾­Ôª
+//ä¸€ä¸ªè¾“å‡ºå±‚ç¥ç»å…ƒ
 double sneuron(std::vector<double> w, std::vector<double> x, double b) {
-    //ÇóºÍ¡Æwx+b
+    //æ±‚å’Œâˆ‘wx+b
     auto sigma = [&w, &x, b]() {
         double sum = 0;
         for (int i = 0; i < x.size(); ++i) {
@@ -181,7 +134,7 @@ double sneuron(std::vector<double> w, std::vector<double> x, double b) {
     return sigma();
 }
 
-//ELU¼¤»îº¯ÊıµÄµ¼Êı
+//ELUæ¿€æ´»å‡½æ•°çš„å¯¼æ•°
 double elu_derivative(double x) {
     if (x >= 0) {
         return 1;
@@ -190,87 +143,87 @@ double elu_derivative(double x) {
     }
 }
 
-//¾ù·½Îó²îÓÃÓÚÍ³¼ÆÄ£ĞÍÎó²îÑµÁ·Çé¿ö
+//å‡æ–¹è¯¯å·®ç”¨äºç»Ÿè®¡æ¨¡å‹è¯¯å·®è®­ç»ƒæƒ…å†µ
 double MSE(double out, double out_hat) {
     return (out - out_hat) * (out - out_hat);
 }
 
-//Softmax×÷ÎªÊä³ö²ã¼¤»îº¯Êı
+//Softmaxä½œä¸ºè¾“å‡ºå±‚æ¿€æ´»å‡½æ•°
 vector<double> softmax(std::vector<double> output, double sum) {
-    std::vector<double> yhat(output.size(), 0);//Êä³ö²ãËùÓĞ¼¤»îÖµ
+    std::vector<double> yhat(output.size(), 0);//è¾“å‡ºå±‚æ‰€æœ‰æ¿€æ´»å€¼
     for (int i = 0; i <= output.size()-1; i++) {
-        yhat[i] += exp(output[i]) / sum;//¼ÆËãÃ¿Ò»¸ö¼¤»îÖµ
+        yhat[i] += exp(output[i]) / sum;//è®¡ç®—æ¯ä¸€ä¸ªæ¿€æ´»å€¼
     }
     return yhat;
 }
 
 
-//Ô¤²â-ÏòÇ°´«²¥
+//é¢„æµ‹-å‘å‰ä¼ æ’­
 vector<double> predict(vector<double> content) {
-    //ÏòÇ°´«²¥ÖÁÒş²Ø²ã
+    //å‘å‰ä¼ æ’­è‡³éšè—å±‚
     for (int m = 0; m <= networkn[0].size() - 1; m++) {
         auto r0 = neuron(network[0][m][0], content, network[0][m][1][0]);
-        networkb[0][m] = r0[0];//Î´¼¤»îÖµ
-        networkn[0][m] = r0[1];//¼¤»îÖµ
+        networkb[0][m] = r0[0];//æœªæ¿€æ´»å€¼
+        networkn[0][m] = r0[1];//æ¿€æ´»å€¼
     }
 
-    //ÏòÇ°´«²¥ÖÁÊä³ö²ã
+    //å‘å‰ä¼ æ’­è‡³è¾“å‡ºå±‚
     for (int n = 0; n <= networkn[1].size() - 1; n++) {
         auto r1 = sneuron(network[1][n][0], networkn[0], network[1][n][1][0]);
-        networkb[1][n] = r1;//Î´¼¤»îÖµ
+        networkb[1][n] = r1;//æœªæ¿€æ´»å€¼
     }
     
-    //softmax¼¤»îÊä³ö²ã
-    double sum = 0;//SoftmaxµÄ·ÖÄ¸£¨Ã¿¸ö¼¤»îÖµ¹²ÓÃ£©
+    //softmaxæ¿€æ´»è¾“å‡ºå±‚
+    double sum = 0;//Softmaxçš„åˆ†æ¯ï¼ˆæ¯ä¸ªæ¿€æ´»å€¼å…±ç”¨ï¼‰
     for (int i = 0; i <= networkb[1].size()-1; i++) {
         sum += exp(networkb[1][i]);
     }
-    networkn[1] = softmax(networkb[1], sum);//¼ÆËãÃ¿¸öÊä³öÉñ¾­Ôª¼¤»îÖµ
+    networkn[1] = softmax(networkb[1], sum);//è®¡ç®—æ¯ä¸ªè¾“å‡ºç¥ç»å…ƒæ¿€æ´»å€¼
 
     return networkn[1];
 }
 
 
-//ÑµÁ·-·´Ïò´«²¥-Ëæ»úÌİ¶ÈÏÂ½µ
+//è®­ç»ƒ-åå‘ä¼ æ’­-éšæœºæ¢¯åº¦ä¸‹é™
 double trainNet(vector<vector<double>> dt) {
-    std::vector<double> out_hat = predict(dt[0]);//Ô¤²â-Ç°À¡
+    std::vector<double> out_hat = predict(dt[0]);//é¢„æµ‹-å‰é¦ˆ
     double MSError = 0;
-    //¼ÆËãÎó²îÖµÓÃMSE¼ì²éÑµÁ·Ğ§¹û
+    //è®¡ç®—è¯¯å·®å€¼ç”¨MSEæ£€æŸ¥è®­ç»ƒæ•ˆæœ
     for (int l = 0; l <= out_hat.size() - 1; l++) {
         MSError += MSE(dt[1][l], out_hat[l]);
     }
 
-    //ÎªÃ¿¸öÊä³öÉñ¾­Ôª·Ö±ğ¼ÆËãÑ§Ï°ÂÊ³ËÒÔËğÊ§Öµ¶ÔÊä³ö²ãÉñ¾­ÔªÎ´¼¤»îÖµµÄÆ«µ¼£¬¼õÇáºóĞø¼ÆËãÁ¿
+    //ä¸ºæ¯ä¸ªè¾“å‡ºç¥ç»å…ƒåˆ†åˆ«è®¡ç®—å­¦ä¹ ç‡ä¹˜ä»¥æŸå¤±å€¼å¯¹è¾“å‡ºå±‚ç¥ç»å…ƒæœªæ¿€æ´»å€¼çš„åå¯¼ï¼Œå‡è½»åç»­è®¡ç®—é‡
     std::vector<double> rMEdN;
     for (int l = 0; l <= out_hat.size() - 1; l++) {
-        rMEdN.push_back(rate * (out_hat[l] - dt[1][l]));//out_hat[l] - dt[1][l] ¼´Softmax+¶à·ÖÀà½»²æìØ½áºÏÇóµ¼£¨Ê¹ÓÃ½»²æìØ×÷Îª¼ÆËãÌİ¶ÈÊ±µÄËğÊ§º¯Êı£¬¶øÊ¹ÓÃMSE½öÓÃÓÚ·½±ãÍ³¼ÆÎó²î£¬²»²ÎÓëÑµÁ·¹ı³Ì£©
+        rMEdN.push_back(rate * (out_hat[l] - dt[1][l]));//out_hat[l] - dt[1][l] å³Softmax+å¤šåˆ†ç±»äº¤å‰ç†µç»“åˆæ±‚å¯¼ï¼ˆä½¿ç”¨äº¤å‰ç†µä½œä¸ºè®¡ç®—æ¢¯åº¦æ—¶çš„æŸå¤±å‡½æ•°ï¼Œè€Œä½¿ç”¨MSEä»…ç”¨äºæ–¹ä¾¿ç»Ÿè®¡è¯¯å·®ï¼Œä¸å‚ä¸è®­ç»ƒè¿‡ç¨‹ï¼‰
     }
 
-    //¸üĞÂÊä³ö²ãÈ¨ÖØ
-    for (int p = 0; p <= networkn[1].size() - 1; p++) {//µÚp¸öÊä³öÉñ¾­Ôª
-        for (int q = 0; q <= network[1][p][0].size() - 1; q++) {//µÚq¸öÈ¨ÖØ
+    //æ›´æ–°è¾“å‡ºå±‚æƒé‡
+    for (int p = 0; p <= networkn[1].size() - 1; p++) {//ç¬¬pä¸ªè¾“å‡ºç¥ç»å…ƒ
+        for (int q = 0; q <= network[1][p][0].size() - 1; q++) {//ç¬¬qä¸ªæƒé‡
             network[1][p][0][q] -= rMEdN[p] * networkn[0][q];
         }
     }
 
-    //¸üĞÂÊä³ö²ãÆ«ÖÃ
-    for (int p = 0; p <= networkn[1].size() - 1; p++) {//µÚp¸öÊä³öÉñ¾­Ôª
+    //æ›´æ–°è¾“å‡ºå±‚åç½®
+    for (int p = 0; p <= networkn[1].size() - 1; p++) {//ç¬¬pä¸ªè¾“å‡ºç¥ç»å…ƒ
         network[1][p][1][0] -= rMEdN[p];
     }
 
-    //¸üĞÂÒş²Ø²ãÈ¨ÖØ
-    for (int p = 0; p <= networkn[0].size() - 1; p++) {//µÚp¸öÒş²ØÉñ¾­Ôª
-        for (int q = 0; q <= network[0][p][0].size() - 1; q++) {//µÚq¸öÈ¨ÖØ
-            //¼ÆËãÃ¿¸öÊä³öÉñ¾­ÔªµÄËğÊ§¶Ô´ËÒş²ØÉñ¾­ÔªµÄÆ«µ¼£¬¿ÉÒÔÖ±½ÓÇóºÍ£¬Ò²¿ÉÒÔÇóÆ½¾ù£¨×¼È·À´ËµÓ¦¸ÃÇóºÍ£¬µ«ÊÇÕâÀï¾Í²»ÔÙ¸Ä±äÁ¿ÃûÁË£¬Àí½â¼´¿É£©
+    //æ›´æ–°éšè—å±‚æƒé‡
+    for (int p = 0; p <= networkn[0].size() - 1; p++) {//ç¬¬pä¸ªéšè—ç¥ç»å…ƒ
+        for (int q = 0; q <= network[0][p][0].size() - 1; q++) {//ç¬¬qä¸ªæƒé‡
+            //è®¡ç®—æ¯ä¸ªè¾“å‡ºç¥ç»å…ƒçš„æŸå¤±å¯¹æ­¤éšè—ç¥ç»å…ƒçš„åå¯¼ï¼Œå¯ä»¥ç›´æ¥æ±‚å’Œï¼Œä¹Ÿå¯ä»¥æ±‚å¹³å‡ï¼ˆå‡†ç¡®æ¥è¯´åº”è¯¥æ±‚å’Œï¼Œä½†æ˜¯è¿™é‡Œå°±ä¸å†æ”¹å˜é‡åäº†ï¼Œç†è§£å³å¯ï¼‰
             double averagenN = 0;
             for (int s = 0; s <= network[1].size() - 1; s++) {
-                averagenN += rMEdN[s] * network[1][s][0][p];//µÚs¸öÊä³öÉñ¾­ÔªµÄÌİ¶È ³ËÒÔ Á¬½Ó×ÅµÚs¸öÊä³öÉñ¾­ÔªµÄÈ¨ÖØ
+                averagenN += rMEdN[s] * network[1][s][0][p];//ç¬¬sä¸ªè¾“å‡ºç¥ç»å…ƒçš„æ¢¯åº¦ ä¹˜ä»¥ è¿æ¥ç€ç¬¬sä¸ªè¾“å‡ºç¥ç»å…ƒçš„æƒé‡
             }
             network[0][p][0][q] -= averagenN * elu_derivative(networkb[0][p]) * dt[0][q];
         }
     }
 
-    //¸üĞÂÒş²Ø²ãÆ«ÖÃ£¬Í¬ÉÏ
+    //æ›´æ–°éšè—å±‚åç½®ï¼ŒåŒä¸Š
     for (int p = 0; p <= networkn[0].size() - 1; p++) {
         double averagenN = 0;
         for (int s = 0; s <= network[1].size() - 1; s++) {
@@ -279,7 +232,7 @@ double trainNet(vector<vector<double>> dt) {
         network[0][p][1][0] -= averagenN * elu_derivative(networkb[0][p]);
     }
 
-    return MSError;//·µ»ØÍ³¼ÆÎó²î
+    return MSError;//è¿”å›ç»Ÿè®¡è¯¯å·®
 }
 
 void train(vector<vector<vector<double>>> dt) {
@@ -288,9 +241,9 @@ void train(vector<vector<vector<double>>> dt) {
     while (true) {
         i++;
         double err = 0;
-        //Ìİ¶ÈÏÂ½µÕë¶ÔÃ¿¸öÑµÁ·Êı¾İ½øĞĞ¸üĞÂÓÅ»¯²ÎÊı
+        //æ¢¯åº¦ä¸‹é™é’ˆå¯¹æ¯ä¸ªè®­ç»ƒæ•°æ®è¿›è¡Œæ›´æ–°ä¼˜åŒ–å‚æ•°
         for (int c = 0; c <= dt.size() - 1; c++) {
-            double preErr = trainNet(dt[c]);//Ìİ¶ÈÏÂ½µÒ»´Î
+            double preErr = trainNet(dt[c]);//æ¢¯åº¦ä¸‹é™ä¸€æ¬¡
             err += preErr;
         }
         
@@ -301,7 +254,7 @@ void train(vector<vector<vector<double>>> dt) {
             rate *= 1.1;
         }
 
-        //ÅĞ¶ÏËğÊ§ÖµÊÇ·ñÂú×ãÒªÇó¼´Ğ¡ÓÚµÈÓÚÄ¿±êËğÊ§Öµ
+        //åˆ¤æ–­æŸå¤±å€¼æ˜¯å¦æ»¡è¶³è¦æ±‚å³å°äºç­‰äºç›®æ ‡æŸå¤±å€¼
         if (err <= aim) {
             std::cout << "Training completed with err <= " << aim << " (" << err << ")" << std::endl;
             std::cout << ">>> finished " << dt.size() * i << " steps (" << i << " rounds) gradient descent in " << /*elapsed + */"ms <<<" << std::endl;
@@ -324,20 +277,20 @@ int main() {
         {0,0,0,0,0,0,0,0,0,0}
     };
     
-    /*ÑµÁ·Íê³ÉºóÔ¤²âÊ±Ê¹ÓÃÒÔÏÂ´úÂë
-    network = loadNetwork("./num_predict.bin");
-    //ÒÔÏÂ´úÂëÓÃÓÚÔ¤²â²âÊÔÊı¾İ¼¯
+    /*è®­ç»ƒå®Œæˆåé¢„æµ‹æ—¶ä½¿ç”¨ä»¥ä¸‹ä»£ç 
+    loadNetwork("./num_predict.bin", network);
+    //ä»¥ä¸‹ä»£ç ç”¨äºé¢„æµ‹æµ‹è¯•æ•°æ®é›†
     for (int dt0 = 0; dt0 <= 9; dt0++) {
         cout << "----------" << dt0 << "----------" << endl;
         for (int dt1 = 0; dt1 <= 10; dt1++) {
             pv(predict(getData("./data/testing/" + to_string(dt0) + "/" + to_string(dt1) + ".txt")));
         }
     }
-    //ÒÔÏÂ´úÂëÓÃÓÚÔ¤²âÄãÊÖĞ´µÄÊı×Ö
+    //ä»¥ä¸‹ä»£ç ç”¨äºé¢„æµ‹ä½ æ‰‹å†™çš„æ•°å­—
     pv(predict(getData("./your_data_path.txt")));
     */
 
-    //ÑµÁ·Éñ¾­ÍøÂçÊ¹ÓÃÒÔÏÂ´úÂë£¬Ô¤²âÊ±É¾µôÒÔÏÂ´úÂë
+    //è®­ç»ƒç¥ç»ç½‘ç»œä½¿ç”¨ä»¥ä¸‹ä»£ç ï¼Œé¢„æµ‹æ—¶åˆ æ‰ä»¥ä¸‹ä»£ç 
     cout << "1/3 Generate Vector" << endl;
     network = {
         {
@@ -385,8 +338,8 @@ int main() {
             {generateVector(30), {0}}
         }
     };
-    rate = 0.0015;//Ñ§Ï°ÂÊ
-    aim = 1;//Ä¿±êËğÊ§Öµ
+    rate = 0.0015;//å­¦ä¹ ç‡
+    aim = 1;//ç›®æ ‡æŸå¤±å€¼
     std::vector<std::vector<std::vector<double>>> training_data;
     cout << "2/3 Load Training Data" << endl;
     for(int dt1=0;dt1<=100;dt1++){
