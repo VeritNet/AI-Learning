@@ -1726,70 +1726,32 @@ double CED(double out, double out_hat){
 using namespace std;
 
 //保存神经网络权重偏置参数至二进制文件
-void saveNetwork(const std::vector<std::vector<std::vector<std::vector<double>>>>& network, const std::string& filename) {
-    std::ofstream file(filename, std::ios::binary);
-    if (file.is_open()) {
-        // 获取四维 vector 的维度信息
-        std::size_t dim1 = network.size();
-        std::size_t dim2 = network[0].size();
-        std::size_t dim3 = network[0][0].size();
-        std::size_t dim4 = network[0][0][0].size();
-        // 先写入维度信息
-        file.write(reinterpret_cast<const char*>(&dim1), sizeof(dim1));
-        file.write(reinterpret_cast<const char*>(&dim2), sizeof(dim2));
-        file.write(reinterpret_cast<const char*>(&dim3), sizeof(dim3));
-        file.write(reinterpret_cast<const char*>(&dim4), sizeof(dim4));
-        // 再写入数据
-        for (const auto& vec1 : network) {
-            for (const auto& vec2 : vec1) {
-                for (const auto& vec3 : vec2) {
-                    file.write(reinterpret_cast<const char*>(vec3.data()), dim4 * sizeof(double));
-                }
-            }
-        }
-        file.close();
-        std::cout << "Network saved to " << filename << std::endl;
-    } else {
-        std::cerr << "Unable to open file: " << filename << std::endl;
-    }
+void saveNetwork(const std::vector<std::vector<std::vector<std::vector<double>>>>& tensor, const std::string& filename) {
+	std::ofstream out(filename, std::ios::binary);
+	for (const auto& three_dim : tensor) {
+		for (const auto& two_dim : three_dim) {
+			for (const auto& one_dim : two_dim) {
+				for (const double& value : one_dim) {
+					out.write(reinterpret_cast<const char*>(&value), sizeof(double));
+				}
+			}
+		}
+	}
+	out.close();
 }
 
-//读取二进制文件中神经网络权重偏置参数
-std::vector<std::vector<std::vector<std::vector<double>>>> loadNetwork(const std::string& filename) {
-    std::vector<std::vector<std::vector<std::vector<double>>>> network;
-    std::ifstream file(filename, std::ios::binary);
-    if (file.is_open()) {
-        // 读取维度信息
-        std::size_t dim1, dim2, dim3, dim4;
-        file.read(reinterpret_cast<char*>(&dim1), sizeof(dim1));
-        file.read(reinterpret_cast<char*>(&dim2), sizeof(dim2));
-        file.read(reinterpret_cast<char*>(&dim3), sizeof(dim3));
-        file.read(reinterpret_cast<char*>(&dim4), sizeof(dim4));
-        // 调整 vector 大小
-        network.resize(dim1);
-        for (auto& vec1 : network) {
-            vec1.resize(dim2);
-            for (auto& vec2 : vec1) {
-                vec2.resize(dim3);
-                for (auto& vec3 : vec2) {
-                    vec3.resize(dim4);
-                }
-            }
-        }
-        // 读取数据
-        for (auto& vec1 : network) {
-            for (auto& vec2 : vec1) {
-                for (auto& vec3 : vec2) {
-                    file.read(reinterpret_cast<char*>(vec3.data()), dim4 * sizeof(double));
-                }
-            }
-        }
-        file.close();
-        std::cout << "Network loaded from " << filename << std::endl;
-    } else {
-        std::cerr << "Unable to open file: " << filename << std::endl;
-    }
-    return network;
+void loadNetwork(const std::string& filename, std::vector<std::vector<std::vector<std::vector<double>>>>& tensor) {
+	std::ifstream in(filename, std::ios::binary);
+	for (auto& three_dim : tensor) {
+		for (auto& two_dim : three_dim) {
+			for (auto& one_dim : two_dim) {
+				for (double& value : one_dim) {
+					in.read(reinterpret_cast<char*>(&value), sizeof(double));
+				}
+			}
+		}
+	}
+	in.close();
 }
 
 //全局变量
@@ -2154,7 +2116,7 @@ int main() {
 
     saveNetwork(network, "./model_1.bin");//保存你训练好的模型权重和偏置参数到二进制的.bin文件中，这里路径改为自己的存储路径
     /*训练完成后下次使用时可以删去上面的train()，改用
-    network = loadNetwork("model_1.bin");//这里路径改为自己的存储路径
+    loadNetwork("model_1.bin", network);//这里路径改为自己的存储路径
     直接从保存的.bin二进制文件中读取模型权重和偏置参数，然后使用
     double result = predict({
     	0,0,0,0,0,0,0,
