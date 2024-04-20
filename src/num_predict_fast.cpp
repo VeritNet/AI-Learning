@@ -35,91 +35,43 @@ double preErr;
 int reportI = 0;
 
 
-//½«Éñ¾­ÍøÂçÄ£ĞÍÈ¨ÖØºÍÆ«ÖÃ±£´æµ½ÎÄ¼ş
-void saveNetwork(const std::vector<std::vector<std::vector<std::vector<double>>>>& network, const std::string& filename) {
-    std::ofstream file(filename, std::ios::binary);
-    if (file.is_open()) {
-        //»ñÈ¡ËÄÎ¬ vector µÄÎ¬¶ÈĞÅÏ¢
-        std::size_t dim1 = network.size();
-        std::size_t dim2 = network[0].size();
-        std::size_t dim3 = network[0][0].size();
-        std::size_t dim4 = network[0][0][0].size();
-
-        //Ğ´ÈëÎ¬¶ÈĞÅÏ¢
-        file.write(reinterpret_cast<const char*>(&dim1), sizeof(dim1));
-        file.write(reinterpret_cast<const char*>(&dim2), sizeof(dim2));
-        file.write(reinterpret_cast<const char*>(&dim3), sizeof(dim3));
-        file.write(reinterpret_cast<const char*>(&dim4), sizeof(dim4));
-
-        //Ğ´ÈëÊı¾İ£¨¶ş½øÖÆ£©
-        for (const auto& vec1 : network) {
-            for (const auto& vec2 : vec1) {
-                for (const auto& vec3 : vec2) {
-                    file.write(reinterpret_cast<const char*>(vec3.data()), dim4 * sizeof(double));
-                }
-            }
-        }
-
-        file.close();
-        std::cout << "Network saved to " << filename << std::endl;
-    }
-    else {
-        std::cerr << "Unable to open file: " << filename << std::endl;
-    }
+//å°†ç¥ç»ç½‘ç»œæ¨¡å‹æƒé‡å’Œåç½®ä¿å­˜åˆ°æ–‡ä»¶
+void saveNetwork(const std::vector<std::vector<std::vector<std::vector<double>>>>& tensor, const std::string& filename) {
+	std::ofstream out(filename, std::ios::binary);
+	for (const auto& three_dim : tensor) {
+		for (const auto& two_dim : three_dim) {
+			for (const auto& one_dim : two_dim) {
+				for (const double& value : one_dim) {
+					out.write(reinterpret_cast<const char*>(&value), sizeof(double));
+				}
+			}
+		}
+	}
+	out.close();
 }
 
-//´Ó¶ş½øÖÆÊı¾İ¶ÁÈ¡È¨ÖØÆ«ÖÃ²ÎÊı
-std::vector<std::vector<std::vector<std::vector<double>>>> loadNetwork(const std::string& filename) {
-    std::vector<std::vector<std::vector<std::vector<double>>>> network;
-
-    std::ifstream file(filename, std::ios::binary);
-    if (file.is_open()) {
-        //¶ÁÈ¡Î¬¶ÈĞÅÏ¢
-        std::size_t dim1, dim2, dim3, dim4;
-        file.read(reinterpret_cast<char*>(&dim1), sizeof(dim1));
-        file.read(reinterpret_cast<char*>(&dim2), sizeof(dim2));
-        file.read(reinterpret_cast<char*>(&dim3), sizeof(dim3));
-        file.read(reinterpret_cast<char*>(&dim4), sizeof(dim4));
-
-        //µ÷Õû vector ´óĞ¡
-        network.resize(dim1);
-        for (auto& vec1 : network) {
-            vec1.resize(dim2);
-            for (auto& vec2 : vec1) {
-                vec2.resize(dim3);
-                for (auto& vec3 : vec2) {
-                    vec3.resize(dim4);
-                }
-            }
-        }
-
-        //¶ÁÈ¡Êı¾İ
-        for (auto& vec1 : network) {
-            for (auto& vec2 : vec1) {
-                for (auto& vec3 : vec2) {
-                    file.read(reinterpret_cast<char*>(vec3.data()), dim4 * sizeof(double));
-                }
-            }
-        }
-
-        file.close();
-        std::cout << "Network loaded from " << filename << std::endl;
-    }
-    else {
-        std::cerr << "Unable to open file: " << filename << std::endl;
-    }
-
-    return network;
+void loadNetwork(const std::string& filename, std::vector<std::vector<std::vector<std::vector<double>>>>& tensor) {
+	std::ifstream in(filename, std::ios::binary);
+	for (auto& three_dim : tensor) {
+		for (auto& two_dim : three_dim) {
+			for (auto& one_dim : two_dim) {
+				for (double& value : one_dim) {
+					in.read(reinterpret_cast<char*>(&value), sizeof(double));
+				}
+			}
+		}
+	}
+	in.close();
 }
 
 
 vector<double> predict(vector<double> dt) {
-    //ÏòÇ°´«²¥ÖÁÒş²Ø²ã
+    //å‘å‰ä¼ æ’­è‡³éšè—å±‚
     vector<vector<vector<vector<double>>>> networkg = network;
     for (int m = 0; m < networkn[0].size(); m++) {
-        //ÇóºÍ¡Æwx+b
+        //æ±‚å’Œâˆ‘wx+b
         networkb[0][m] = dot_product(network[0][m][0].size(), network[0][m][0].data(), dt.data()) + network[0][m][1][0];
-        //¼¤»î
+        //æ¿€æ´»
         if (networkb[0][m] >= 0) {
             networkn[0][m] = networkb[0][m];
         }
@@ -128,18 +80,18 @@ vector<double> predict(vector<double> dt) {
         }
     }
 
-    //ÏòÇ°´«²¥ÖÁÊä³ö²ã
+    //å‘å‰ä¼ æ’­è‡³è¾“å‡ºå±‚
     for (int n = 0; n < networkn[1].size(); n++) {
-        networkb[1][n] = dot_product(network[1][n][0].size(), network[1][n][0].data(), networkn[0].data()) + network[1][n][1][0];//Î´¼¤»îÖµ
+        networkb[1][n] = dot_product(network[1][n][0].size(), network[1][n][0].data(), networkn[0].data()) + network[1][n][1][0];//æœªæ¿€æ´»å€¼
     }
 
-    //softmax¼¤»îÊä³ö²ã
-    double SSum = 0;//SoftmaxµÄ·ÖÄ¸£¨Ã¿¸ö¼¤»îÖµ¹²ÓÃ£©
+    //softmaxæ¿€æ´»è¾“å‡ºå±‚
+    double SSum = 0;//Softmaxçš„åˆ†æ¯ï¼ˆæ¯ä¸ªæ¿€æ´»å€¼å…±ç”¨ï¼‰
     for (int i = 0; i < networkb[1].size(); i++) {
         SSum += exp(networkb[1][i]);
     }
     for (int i = 0; i < networkb[1].size(); i++) {
-        networkn[1][i] += exp(networkb[1][i]) / SSum;//¼ÆËãÃ¿Ò»¸ö¼¤»îÖµ
+        networkn[1][i] += exp(networkb[1][i]) / SSum;//è®¡ç®—æ¯ä¸€ä¸ªæ¿€æ´»å€¼
     }
 
     cout << networkn[1][0] << endl;
@@ -202,12 +154,12 @@ void report(vector<vector<vector<vector<vector<double>>>>> result) {
 
 
 int trainNet(vector<vector<double>> dt, vector<vector<vector<vector<double>>>> network, vector<vector<double>> networkn, vector<vector<double>> networkb, double rate, std::function<void(vector<vector<vector<vector<vector<double>>>>> result)> callback) {
-    //ÏòÇ°´«²¥ÖÁÒş²Ø²ã
+    //å‘å‰ä¼ æ’­è‡³éšè—å±‚
     vector<vector<vector<vector<double>>>> networkg = network;
     for (int m = 0; m < networkn[0].size(); m++) {
-        //ÇóºÍ¡Æwx+b
+        //æ±‚å’Œâˆ‘wx+b
         networkb[0][m] = dot_product(network[0][m][0].size(), network[0][m][0].data(), dt[0].data()) + network[0][m][1][0];
-        //¼¤»î
+        //æ¿€æ´»
         if (networkb[0][m] >= 0) {
             networkn[0][m] = networkb[0][m];
         }
@@ -216,51 +168,51 @@ int trainNet(vector<vector<double>> dt, vector<vector<vector<vector<double>>>> n
         }
     }
 
-    //ÏòÇ°´«²¥ÖÁÊä³ö²ã
+    //å‘å‰ä¼ æ’­è‡³è¾“å‡ºå±‚
     for (int n = 0; n < networkn[1].size(); n++) {
-        networkb[1][n] = dot_product(network[1][n][0].size(), network[1][n][0].data(), networkn[0].data()) + network[1][n][1][0];//Î´¼¤»îÖµ
+        networkb[1][n] = dot_product(network[1][n][0].size(), network[1][n][0].data(), networkn[0].data()) + network[1][n][1][0];//æœªæ¿€æ´»å€¼
     }
 
-    //softmax¼¤»îÊä³ö²ã
-    double SSum = 0;//SoftmaxµÄ·ÖÄ¸£¨Ã¿¸ö¼¤»îÖµ¹²ÓÃ£©
+    //softmaxæ¿€æ´»è¾“å‡ºå±‚
+    double SSum = 0;//Softmaxçš„åˆ†æ¯ï¼ˆæ¯ä¸ªæ¿€æ´»å€¼å…±ç”¨ï¼‰
     for (int i = 0; i < networkb[1].size(); i++) {
         SSum += exp(networkb[1][i]);
     }
     for (int i = 0; i < networkb[1].size(); i++) {
-        networkn[1][i] += exp(networkb[1][i]) / SSum;//¼ÆËãÃ¿Ò»¸ö¼¤»îÖµ
+        networkn[1][i] += exp(networkb[1][i]) / SSum;//è®¡ç®—æ¯ä¸€ä¸ªæ¿€æ´»å€¼
     }
 
 
 
     double MSError = 0;
-    //¼ÆËãÎó²îÖµÓÃMSE¼ì²éÑµÁ·Ğ§¹û
+    //è®¡ç®—è¯¯å·®å€¼ç”¨MSEæ£€æŸ¥è®­ç»ƒæ•ˆæœ
     for (int l = 0; l < networkn[1].size(); l++) {
         MSError += ((dt[1][l] - networkn[1][l]) * (dt[1][l] - networkn[1][l]));
     }
 
-    //ÎªÃ¿¸öÊä³öÉñ¾­Ôª·Ö±ğ¼ÆËãÑ§Ï°ÂÊ³ËÒÔËğÊ§Öµ¶ÔÊä³ö²ãÉñ¾­ÔªÎ´¼¤»îÖµµÄÆ«µ¼£¬¼õÇáºóĞø¼ÆËãÁ¿
+    //ä¸ºæ¯ä¸ªè¾“å‡ºç¥ç»å…ƒåˆ†åˆ«è®¡ç®—å­¦ä¹ ç‡ä¹˜ä»¥æŸå¤±å€¼å¯¹è¾“å‡ºå±‚ç¥ç»å…ƒæœªæ¿€æ´»å€¼çš„åå¯¼ï¼Œå‡è½»åç»­è®¡ç®—é‡
     std::vector<double> rMEdN;
     for (int l = 0; l < networkn[1].size(); l++) {
-        rMEdN.push_back(-rate * (networkn[1][l] - dt[1][l]));//networkn[1][l] - dt[1][l] ¼´Softmax+¶à·ÖÀà½»²æìØ½áºÏÇóµ¼£¨Ê¹ÓÃ½»²æìØ×÷Îª¼ÆËãÌİ¶ÈÊ±µÄËğÊ§º¯Êı£¬¶øÊ¹ÓÃMSE½öÓÃÓÚ·½±ãÍ³¼ÆÎó²î£¬²»²ÎÓëÑµÁ·¹ı³Ì£©
+        rMEdN.push_back(-rate * (networkn[1][l] - dt[1][l]));//networkn[1][l] - dt[1][l] å³Softmax+å¤šåˆ†ç±»äº¤å‰ç†µç»“åˆæ±‚å¯¼ï¼ˆä½¿ç”¨äº¤å‰ç†µä½œä¸ºè®¡ç®—æ¢¯åº¦æ—¶çš„æŸå¤±å‡½æ•°ï¼Œè€Œä½¿ç”¨MSEä»…ç”¨äºæ–¹ä¾¿ç»Ÿè®¡è¯¯å·®ï¼Œä¸å‚ä¸è®­ç»ƒè¿‡ç¨‹ï¼‰
     }
 
-    //¸üĞÂÊä³ö²ãÈ¨ÖØ
-    for (int p = 0; p < networkn[1].size(); p++) {//µÚp¸öÊä³öÉñ¾­Ôª
+    //æ›´æ–°è¾“å‡ºå±‚æƒé‡
+    for (int p = 0; p < networkn[1].size(); p++) {//ç¬¬pä¸ªè¾“å‡ºç¥ç»å…ƒ
         networkg[1][p][0] = networkn[0];
         scale_product(networkg[1][p][0].size(), networkg[1][p][0].data(), rMEdN[p]);
     }
 
-    //¸üĞÂÊä³ö²ãÆ«ÖÃ
-    for (int p = 0; p < networkn[1].size(); p++) {//µÚp¸öÊä³öÉñ¾­Ôª
+    //æ›´æ–°è¾“å‡ºå±‚åç½®
+    for (int p = 0; p < networkn[1].size(); p++) {//ç¬¬pä¸ªè¾“å‡ºç¥ç»å…ƒ
         networkg[1][p][1][0] = rMEdN[p];
     }
 
-    //¸üĞÂÒş²Ø²ã
-    for (int p = 0; p < networkn[0].size(); p++) {//µÚp¸öÒş²ØÉñ¾­Ôª
-        //¼ÆËãÃ¿¸öÊä³öÉñ¾­ÔªµÄËğÊ§¶Ô´ËÒş²ØÉñ¾­ÔªµÄÆ«µ¼£¬¿ÉÒÔÖ±½ÓÇóºÍ£¬Ò²¿ÉÒÔÇóÆ½¾ù£¨×¼È·À´ËµÓ¦¸ÃÇóºÍ£¬µ«ÊÇÕâÀï¾Í²»ÔÙ¸Ä±äÁ¿ÃûÁË£¬Àí½â¼´¿É£©
+    //æ›´æ–°éšè—å±‚
+    for (int p = 0; p < networkn[0].size(); p++) {//ç¬¬pä¸ªéšè—ç¥ç»å…ƒ
+        //è®¡ç®—æ¯ä¸ªè¾“å‡ºç¥ç»å…ƒçš„æŸå¤±å¯¹æ­¤éšè—ç¥ç»å…ƒçš„åå¯¼ï¼Œå¯ä»¥ç›´æ¥æ±‚å’Œï¼Œä¹Ÿå¯ä»¥æ±‚å¹³å‡ï¼ˆå‡†ç¡®æ¥è¯´åº”è¯¥æ±‚å’Œï¼Œä½†æ˜¯è¿™é‡Œå°±ä¸å†æ”¹å˜é‡åäº†ï¼Œç†è§£å³å¯ï¼‰
         double averagenN = 0;
         for (int s = 0; s < network[1].size(); s++) {
-            averagenN += rMEdN[s] * network[1][s][0][p];//µÚs¸öÊä³öÉñ¾­ÔªµÄÌİ¶È ³ËÒÔ Á¬½Ó×ÅµÚs¸öÊä³öÉñ¾­ÔªµÄÈ¨ÖØ
+            averagenN += rMEdN[s] * network[1][s][0][p];//ç¬¬sä¸ªè¾“å‡ºç¥ç»å…ƒçš„æ¢¯åº¦ ä¹˜ä»¥ è¿æ¥ç€ç¬¬sä¸ªè¾“å‡ºç¥ç»å…ƒçš„æƒé‡
         }
         if (networkb[0][p] >= 0) {
             networkg[0][p][1][0] = averagenN;
@@ -287,7 +239,7 @@ void train(vector<vector<vector<double>>> dt, double rate, double aim) {
     while (true) {
         i++;
         double err = 0;
-        //Ìİ¶ÈÏÂ½µÕë¶ÔÃ¿¸öÑµÁ·Êı¾İ½øĞĞ¸üĞÂÓÅ»¯²ÎÊı
+        //æ¢¯åº¦ä¸‹é™é’ˆå¯¹æ¯ä¸ªè®­ç»ƒæ•°æ®è¿›è¡Œæ›´æ–°ä¼˜åŒ–å‚æ•°
         auto start = std::chrono::high_resolution_clock::now();
         for (int c = 0; c < dt.size() / batchSize; c++) {
             while (true) {
@@ -313,7 +265,7 @@ void train(vector<vector<vector<double>>> dt, double rate, double aim) {
             rate *= 1.1;
         }
 
-        //ÅĞ¶ÏËğÊ§ÖµÊÇ·ñÂú×ãÒªÇó¼´Ğ¡ÓÚµÈÓÚÄ¿±êËğÊ§Öµ
+        //åˆ¤æ–­æŸå¤±å€¼æ˜¯å¦æ»¡è¶³è¦æ±‚å³å°äºç­‰äºç›®æ ‡æŸå¤±å€¼
         if (err <= aim) {
             std::cout << ">>> finished " << dt.size() * i << " steps (" << i << " rounds) gradient descent in " << std::endl;
             break;
@@ -325,7 +277,7 @@ void train(vector<vector<vector<double>>> dt, double rate, double aim) {
 }
 
 
-//Ëæ»úÉú³ÉÃ¿¸ö³õÊ¼È¨ÖØºÍÆ«ÖÃ
+//éšæœºç”Ÿæˆæ¯ä¸ªåˆå§‹æƒé‡å’Œåç½®
 std::vector<double> generateVector(int length) {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -337,7 +289,7 @@ std::vector<double> generateVector(int length) {
     return result;
 }
 
-//»ñÈ¡»Ò¶ÈÎÄ±¾Êı¾İ²¢½âÎöÎªvector
+//è·å–ç°åº¦æ–‡æœ¬æ•°æ®å¹¶è§£æä¸ºvector
 vector<double> getData(std::string path) {
     std::ifstream file(path);
     if (!file.is_open()) {
@@ -465,8 +417,8 @@ int main() {
         networkgs[0][p][1][0] = 0;
     }
 
-    double rate = 0.001;//Ñ§Ï°ÂÊ
-    double aim = 1e-5;//Ä¿±êËğÊ§Öµ
+    double rate = 0.001;//å­¦ä¹ ç‡
+    double aim = 1e-5;//ç›®æ ‡æŸå¤±å€¼
     cout << "2/3 Load Training Data" << endl;
     for (int dt1 = 0; dt1 <= 100; dt1++) {
         training_data.push_back({ getData("./data/0/" + to_string(dt1) + ".txt"), {1,0,0,0,0,0,0,0,0,0} });
