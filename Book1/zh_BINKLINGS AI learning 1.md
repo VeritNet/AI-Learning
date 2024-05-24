@@ -2187,7 +2187,7 @@ int main() {
 using namespace std;
 
 //计算每一个激活值（分子比分母）
-vector<double> softmax2(std::vector<double> output, double sum){
+vector<double> CalculateActivation(std::vector<double> output, double sum){
 	std::vector<double> yhat(output.size(), 0);
 	for(int i=0; i<=output.size(); i++){
 		yhat[i] += exp(output[i]) / sum;
@@ -2201,7 +2201,7 @@ vector<double> softmax(std::vector<double> input){
     for(int i=0; i<=input[1].size(); i++){
     	sum += exp(input[1][i]);
     }
-    vector<double> out = softmax(input[1], sum);//计算每一个激活值
+    vector<double> out = CalculateActivation(input[1], sum);//计算每一个激活值
 	return out;
 }
 ```
