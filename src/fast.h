@@ -1,21 +1,21 @@
 #pragma once
-#include <emmintrin.h> // °üº¬SSE2Ö¸Áî¼¯µÄÍ·ÎÄ¼ş
+#include <emmintrin.h> // åŒ…å«SSE2æŒ‡ä»¤é›†çš„å¤´æ–‡ä»¶
 
 using namespace std;
 
 double dot_product(size_t n, const double* a, const double* b) {
-    __m128d sum = _mm_setzero_pd(); // ³õÊ¼»¯Îª0
+    __m128d sum = _mm_setzero_pd(); // åˆå§‹åŒ–ä¸º0
     size_t i;
     for (i = 0; i < n - (n % 2); i += 2) {
-        __m128d ai = _mm_load_pd(a + i); // ¼ÓÔØa[i]µ½a[i+1]
-        __m128d bi = _mm_load_pd(b + i); // ¼ÓÔØb[i]µ½b[i+1]
-        __m128d prod = _mm_mul_pd(ai, bi); // ¼ÆËãa[i]*b[i]µ½a[i+1]*b[i+1]
-        sum = _mm_add_pd(sum, prod); // ÀÛ¼Ó½á¹û
+        __m128d ai = _mm_load_pd(a + i); // åŠ è½½a[i]åˆ°a[i+1]
+        __m128d bi = _mm_load_pd(b + i); // åŠ è½½b[i]åˆ°b[i+1]
+        __m128d prod = _mm_mul_pd(ai, bi); // è®¡ç®—a[i]*b[i]åˆ°a[i+1]*b[i+1]
+        sum = _mm_add_pd(sum, prod); // ç´¯åŠ ç»“æœ
     }
-    // ½«2¸ödoubleÏà¼ÓµÃµ½×îÖÕ½á¹û
+    // å°†2ä¸ªdoubleç›¸åŠ å¾—åˆ°æœ€ç»ˆç»“æœ
     sum = _mm_add_sd(sum, _mm_unpackhi_pd(sum, sum));
     double total = _mm_cvtsd_f64(sum);
-    // ´¦ÀíÊ£ÓàµÄÔªËØ
+    // å¤„ç†å‰©ä½™çš„å…ƒç´ 
     for (; i < n; ++i) {
         total += a[i] * b[i];
     }
@@ -25,16 +25,16 @@ double dot_product(size_t n, const double* a, const double* b) {
 void hadamard_product(double* a, double* b, double* result, int size) {
     int i = 0;
     for (; i < size - (size % 4); i += 4) {
-        __m128d vector1a = _mm_load_pd(a + i); // ¼ÓÔØ¶ÔÆëµÄdouble¾«¶È¸¡µãÊı
-        __m128d vector1b = _mm_load_pd(a + i + 2); // ¼ÓÔØ¶ÔÆëµÄdouble¾«¶È¸¡µãÊı
-        __m128d vector2a = _mm_load_pd(b + i); // ¼ÓÔØ¶ÔÆëµÄdouble¾«¶È¸¡µãÊı
-        __m128d vector2b = _mm_load_pd(b + i + 2); // ¼ÓÔØ¶ÔÆëµÄdouble¾«¶È¸¡µãÊı
-        __m128d resa = _mm_mul_pd(vector1a, vector2a); // ¼ÆËãHadamard³Ë»ı
-        __m128d resb = _mm_mul_pd(vector1b, vector2b); // ¼ÆËãHadamard³Ë»ı
-        _mm_store_pd(result + i, resa); // ´æ´¢½á¹û
-        _mm_store_pd(result + i + 2, resb); // ´æ´¢½á¹û
+        __m128d vector1a = _mm_load_pd(a + i); // åŠ è½½å¯¹é½çš„doubleç²¾åº¦æµ®ç‚¹æ•°
+        __m128d vector1b = _mm_load_pd(a + i + 2); // åŠ è½½å¯¹é½çš„doubleç²¾åº¦æµ®ç‚¹æ•°
+        __m128d vector2a = _mm_load_pd(b + i); // åŠ è½½å¯¹é½çš„doubleç²¾åº¦æµ®ç‚¹æ•°
+        __m128d vector2b = _mm_load_pd(b + i + 2); // åŠ è½½å¯¹é½çš„doubleç²¾åº¦æµ®ç‚¹æ•°
+        __m128d resa = _mm_mul_pd(vector1a, vector2a); // è®¡ç®—Hadamardä¹˜ç§¯
+        __m128d resb = _mm_mul_pd(vector1b, vector2b); // è®¡ç®—Hadamardä¹˜ç§¯
+        _mm_store_pd(result + i, resa); // å­˜å‚¨ç»“æœ
+        _mm_store_pd(result + i + 2, resb); // å­˜å‚¨ç»“æœ
     }
-    // ´¦ÀíÊ£ÓàµÄÔªËØ
+    // å¤„ç†å‰©ä½™çš„å…ƒç´ 
     for (; i < size; ++i) {
         result[i] = a[i] * b[i];
     }
@@ -57,7 +57,7 @@ void scale_product(int size, double* arr, double scalar) {
 
 void add_arrays(int n, double* a, double* b) {
     int i;
-    // ´¦Àí¿ÉÒÔ±»4Õû³ıµÄ²¿·Ö
+    // å¤„ç†å¯ä»¥è¢«4æ•´é™¤çš„éƒ¨åˆ†
     for (i = 0; i + 3 < n; i += 4) {
         __m128d va1 = _mm_load_pd(a + i);
         __m128d va2 = _mm_load_pd(a + i + 2);
@@ -68,7 +68,7 @@ void add_arrays(int n, double* a, double* b) {
         _mm_store_pd(b + i, vb1);
         _mm_store_pd(b + i + 2, vb2);
     }
-    // ´¦ÀíÊ£ÓàµÄÔªËØ
+    // å¤„ç†å‰©ä½™çš„å…ƒç´ 
     for (; i < n; ++i) {
         b[i] += a[i];
     }
