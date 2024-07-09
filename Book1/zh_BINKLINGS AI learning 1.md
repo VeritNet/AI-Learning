@@ -1,21 +1,19 @@
 ---
 title: BINKLINGS AI learning 第一册
 ---
-
 # 版权
 
 本书开源仓库地址为 https://github.com/VeritNet/AI-Learning
 官网网址 http://ai.binklings.com/
+
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">BINKLINGS AI learning</span> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
 BINKLINGS AI learning © 2023 is licensed under CC BY-NC-SA 4.0. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/
 
-
 # 目录
 
-
 [toc!]
-# 关于作者
 
+# 关于作者
 
 官网：BINKLINGS.com
    或 ai.binklings.com
@@ -25,13 +23,11 @@ Youtube频道：https://www.youtube.com/@BINKLINGS
 
 <h3 style="color: blue">Knowledge sharing for mutual benefits.🎉🎉🎉</h3>
 
-<a href="https://afdian.net/a/binklings"><img width="200" src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.jpg" alt=""></a>
-
+`<a href="https://afdian.net/a/binklings"><img width="200" src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.jpg" alt="">``</a>`
 
 # 前言
 
-
-## <h3 style="color: red">本书阅读指导（必读）</h3>
+## `<h3 style="color: red">`本书阅读指导（必读）`</h3>`
 
 ### 常见符号和字体
 
@@ -39,6 +35,7 @@ Youtube频道：https://www.youtube.com/@BINKLINGS
 粗体字：**重要术语（英文全称 / 英文缩写 / 中文全称）**
 斜体字：*数学公式a+b=c*
 代码框：
+
 ```cpp
 //这是一些c++代码
 ```
@@ -51,6 +48,7 @@ Youtube频道：https://www.youtube.com/@BINKLINGS
 本书的实践分为两部分：代码实践和GeoGebra数学动画实践。它们都十分重要。
 当我把我的GeoGebra作品链接展示出来时，我十分建议你打开并尝试与其进行互动（如手动改变一个数值，看看图像会发生什么变化），它会帮助你更好的理解一些理论。
 我使用的代码主要是javascript和c++，我使用它们的理由是：
+
 - javascript在进行各种计算时表达很简洁，更接近自然数学语言；只要你的设备有浏览器，不论移动设备还是电脑，都可以运行js代码
 - c\+\+一些语法和js是有共同点的；c\+\+运行速度是其它语言的几十甚至上百倍
 
@@ -59,11 +57,13 @@ Youtube频道：https://www.youtube.com/@BINKLINGS
 
 注：
 如果你的c\+\+编译器支持版本低于c\+\+11或不支持使用list initialization（列表初始化），请将所有c++代码中的
+
 ```cpp
 std::vector<double> xxxxxx = {1.0, 2.0, 3.0};
-``` 
+```
 
 类似的方法改为
+
 ```cpp
 std::vector<double> xxxxxx;
 xxxxxx.push_back(1.0);
@@ -74,6 +74,7 @@ xxxxxx.push_back(3.0);
 ### 基础知识
 
 不论你是小学生，还是研究生，本书都适合你阅读。本书对部分高数知识有一定介绍，但你需要做好以下准备：
+
 - 函数学习基础（初中课本必学内容）
 - 导数学习基础（3Blue1Brown对导数的讲解非常好，建议你看一看它的系列视频，Youtube上的官方英语：https://www.3blue1brown.com/topics/calculus  Bilibili上的官方中英双语字幕：https://space.bilibili.com/88461692/channel/seriesdetail?sid=1528931 请用电脑版网站或哔哩哔哩app打开后者以看到完整视频列表）
 - 至少会一门编程语言（推荐：c++，最好会一点js）
@@ -84,9 +85,7 @@ xxxxxx.push_back(3.0);
 
 不过我需要提前做好声明，这本书并不适合你用于应付考试或面试，也不适合死记硬背，事实上，这里并没有什么"知识点"的概念，本书的核心理念是让你先一步步看到这一切算法是如何被想出来的，然后对其有更深入的理解，最后引导你将其投入实践，去开发自己的模型，去做自己的项目，实现你在这个领域的理想。
 
-
 # 第一章 初识神经网络
-
 
 ## 第一节 从感知机到神经元
 
@@ -103,7 +102,7 @@ xxxxxx.push_back(3.0);
 ![ ](./images/1693394603517.png)
 
 它是由计算机科学家罗森布拉特在1958年首先提出的。我们在讲原理之前，先以上帝视角，把它的算法写出来吧：
-*output=f(∑j wjxj+b)* 
+*output=f(∑j wjxj+b)*
 如果用通俗的方式写出来，它完全等于这个式子：
 *output=f(w1×x1+w2×x2+...+wn×xn+b)*
 
@@ -116,8 +115,6 @@ xxxxxx.push_back(3.0);
 你也要有将其扩展到更高维度去思考的能力：
 ![ ](./images/1694702023153.png)
 
-
-
 至此，我们应该对原始形态的单个感知机已经有了一定认知了。总结来说，它先用方程画出一条直线（或平面，或超平面），然后将新数据带入感知机函数，得出的值经过函数f判断正负性，最终输出output值0或1，代表新数据在哪一类。
 
 我们也发现了许多问题：++感知机只能进行二分类，而且是**线性（linear）的**++，也就是说那个函数画出来的线（或面等）是直线或平面，而不是曲线或曲面。这也很好证明，我们会在后面再次验证这一点，不过现在你也可以用纸笔去验证它，像这样（我把偏置b先省略了）：
@@ -127,7 +124,6 @@ xxxxxx.push_back(3.0);
 这是因为，不论有多少个x，它们只会被不断的乘以一个常数w再相加，所以它们的++指数永远是1++，也就是一次方，而我们知道一次函数永远是线性的。
 事实上，这个问题曾经导致感知机一度被否认。因为它++不能解决**异或问题（XOR）**++
 
-
 ![ ](./images/1693457556412.png)
 如图，我们能找到一条直线，去完美划分开红色和蓝色两类数据点吗？显然不可能。
 这时，我们今天的主角快来了。让我们先谈谈组成整个神经网络的**神经元（Neuron）**。
@@ -135,7 +131,6 @@ xxxxxx.push_back(3.0);
 ### 第2框 神经元
 
 我画了一张图，展示了神经网络中单个神经元的结构：
-
 
 ![ ](./images/1693472595158.png)
 它和感知机还是很像的，仔细观察，它与感知机具体有哪些变化？你大概率会注意到，原先用来判断正负性的函数f不见了。这就意味着，新的神经元不仅会输出0或1。事实上，它可以输出任何值，比如0.11，0.94和0.56等等。取函数f而代之的，是一个激活操作（Activate），就是图像中圆圈的右半部分。
@@ -145,15 +140,18 @@ xxxxxx.push_back(3.0);
 下面让我们了解下几种常见的激活函数吧。
 
 这是**ReLU激活函数（The Rectified Linear Unit / 修正线性单元函数）**：
+
 ```
 f(x) = max(0,x)
 ```
+
 这是它的函数图像：
 
 ![ ](./images/1693475859793.jpg)
 输入值小于0，就返回0，输入值大于0，就返回输入值本身。看上去很简单，而且它是最受欢迎的激活函数！（但是由于其在输入为负时返回0的特点，它可能会在学习率过大时导致部分神经元永久性死亡，听起来好可怕，什么意思呢？我们后面会学到，为了解决这个问题，还有Leaky ReLU、PReLU、ELU、SeLU和GeLU等激活函数，但请别提前担心这件事）
 
 如果你学过javascript，可以将ReLU写成如下代码（js语言很简洁，没学过一般也能看懂）：
+
 ```javascript
 function relu(z) {
     return Math.max(0, z);
@@ -161,6 +159,7 @@ function relu(z) {
 ```
 
 下面的是ReLU函数的c++代码表达：
+
 ```cpp
 float relu(float x) {
     return (x > 0) ? x : 0;
@@ -175,12 +174,12 @@ float relu(float x) {
 如果你不能理解为什么会有一个e来到这里，请先别担心，我们会在以后讲到。把这个函数图像画出来，长成这样：
 ![ ](./images/1698826249512.png)
 
-
 有趣的是，这个函数会把任何输入值缩放（映射）到0到1之间的连续输出，并且只有输入值在0左右附近变化时，输出才会有明显变化，其它情况，要么接近0，要么接近1。
 这个函数是多数教程首先讲的，也比较受欢迎，但最大的问题就是：在深度神经网络中会导致梯度消失。（你现在不必明白这些，我只是给你打个预防针）
 ++由Sigmoid作为激活函数的神经元被称为**S型神经元**++
 
 这是其js代码表达：
+
 ```javascript
 function sigmoid(x) {
   return 1 / (1 + Math.exp(-x));
@@ -188,6 +187,7 @@ function sigmoid(x) {
 ```
 
 这是c++版：
+
 ```cpp
 #include <cmath>
 
@@ -198,12 +198,12 @@ double sigmoid(double x) {
 
 这是**Tanh激活函数（hyperbolic tangent function / 双曲正切函数）**：
 ![ ](./images/1693559043608.png)
-其实你看到的最终表达式是`tanh(x)=sinh(x)/cosh(x)`的展开式，我们不看这复杂的函数解析式了，直接看图像：
+其实你看到的最终表达式是 `tanh(x)=sinh(x)/cosh(x)`的展开式，我们不看这复杂的函数解析式了，直接看图像：
 ![ ](./images/1698826335568.png)
-
 
 它的图像简直和Sigmoid太像了，只不过它把任何数映射，或者说是缩放到了-1和1之间，而Sigmoid则是0和1之间。它的分布上更加对称。可以得知，它同样会导致梯度消失问题，这是后话。
 其js代码表达：
+
 ```javascript
 function tanh(x) {
   // 使用指数函数计算tanh
@@ -214,6 +214,7 @@ function tanh(x) {
 ```
 
 c++的cmath有现成的tanh函数：（cmath对程序性能影响几乎为0，或者说正常情况是百分之百没有影响的）
+
 ```cpp
 #include <cmath>
 
@@ -229,6 +230,7 @@ double tanh(double x) {
 这就是神经网络中的一个神经元。总结来说，神经元是感知机的优化版，它可以输出任何带有小数的值，并且通过激活函数，实现了划分线的非线性，使其能开始适应较为复杂的数据，初步解决了简单的异或问题。
 
 这是单个神经元的js代码表达（已被细细地拆开，以便学习）：
+
 ```javascript
 function Neuron(w, x, b) {
     function relu(z) {
@@ -247,6 +249,7 @@ console.log(Neuron([0.1,0.6],[0.4,0.3],0.5))//输出值为0.72
 ```
 
 c++版：
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -281,7 +284,6 @@ int main() {
 
 虽然c++编写难，但我仍然建议你试一试，因为其性能和速度将在未来学习到的各种深度学习神经网络中远超其它语言！
 下一节，我们将看到神经元是如何构造出神经网络的。
-
 
 ## 第二节 神经元构成神经网络
 
@@ -326,6 +328,7 @@ int main() {
 你一定迫不及待的想要试一试自己搭建神经网络，只不过我们还没学到如何调整出正确的参数w和b来做出这个预测函数。但我已经提前训练好了一个模型，你可以先试玩一下，感受一下我们刚刚的学习成果。
 我们先把神经网络代码写出来，这里因为神经网络规模实在太小，就不用循环语句来计算了。
 这是js版本：
+
 ```javascript
 //隐藏层第一个神经元
 na1w1 = -0.16132499999994152
@@ -355,77 +358,70 @@ function Neuron(w, x, b) {
     function sigma(w, x, b) {
         return tanh(w.reduce((acc, curr, i) => acc + curr * x[i], 0) + b);
     }
-    
+  
     return sigma(w, x, b);
 }
 //预测函数,即向前传播
 function predict(content){
     in1 = content
-    
+  
     na1 = Neuron([na1w1,na1w2],[in1],na1b)
     na2 = Neuron([na2w1,na2w2],[in1],na2b)
     out = Neuron([outw1,outw2],[na1,na2],outb)
-    
+  
     return String(out);
 }
 ```
 
 这是c++版本：
+
 ```cpp
 #include <iostream>
+#include <vector>
 #include <cmath>
-
+#include "activation_functions.h"
 using namespace std;
 
-//隐藏层第一个神经元
-double na1w1 = -0.16132499999994152;
-double na1w2 = 0.7;
-double na1b = 0.07210999999999113;
-//隐藏层第二个神经元
-double na2w1 = -0.2150150000000196;
-double na2w2 = 0.8;
-double na2b = 1.4037740000000716;
-//输出层神经元
-double outw1 = 0.3427469999998477;
-double outw2 = -0.7286400000000355;
-double outb = 0.6238199999996561;
-
-// Tanh激活函数
-double tanh(double z) {
-    double e1 = exp(z);
-    double e2 = exp(-z);
-    return (e1 - e2) / (e1 + e2);
-}
+// 定义权重和偏置
+const vector<double> na1w = { -0.16132499999994152, 0.7 };
+const vector<double> na2w = { -0.2150150000000196, 0.8 };
+const vector<double> outw = { 0.3427469999998477, -0.7286400000000355 };
+const double na1b = 0.07210999999999113;
+const double na2b = 1.4037740000000716;
+const double outb = 0.6238199999996561;
 
 // 连乘求和
-double sigma(double w[], double x[], double b) {
+double sigma(const vector<double>& w, const vector<double>& x, double b) {
     double sum = 0.0;
-    for (int i = 0; i < 2; i++) {
+    for (size_t i = 0; i < w.size(); ++i) {
         sum += w[i] * x[i];
     }
-    return tanh(sum + b);
+    return sum + b;
 }
 
 // 神经元计算
-double Neuron(double w[], double x[], double b) {
-    return sigma(w, x, b);
+double Neuron(const vector<double>& w, const vector<double>& x, double b) {
+    double z = sigma(w, x, b);
+    return ActivationFunctions::tanh(z); // 假设你在activation_functions.h中定义了这个函数
 }
 
 // 预测函数，即向前传播
-double predict(double content) {
-    double in1 = content;
-    double na1 = Neuron(new double[2]{na1w1, na1w2}, &in1, na1b);
-    double na2 = Neuron(new double[2]{na2w1, na2w2}, &in1, na2b);
-    double out = Neuron(new double[2]{outw1, outw2}, new double[2]{na1, na2}, outb);
-    return out;
+double predict(const vector<double>& input) {
+    double na1 = Neuron(na1w, input, na1b);
+    double na2 = Neuron(na2w, input, na2b);
+    vector<double> hidden_output = { na1, na2 };
+    double output = Neuron(outw, hidden_output, outb);
+    return output;
 }
 
 int main() {
-    double pv = predict(18); // 当温度为n℃时人们外出活动的概率（可估计温度范围: 0∽30℃）
-    cout << "预测活动概率：" << pv << endl; // 输出值为0.76229
-    
+    vector<double> x = { 18, 20 };
+    double pv = predict(x); // 当温度为n℃时人们外出活动的概率（可估计温度范围: 0∽30℃）,为了演示方便这里加了湿度，第二个参数(20)
+    cout << "预测活动概率：" << pv << endl; // 输出值为0.233537
+
     return 0;
 }
+
 ```
 
 我只用了10个在0至30度直接的训练数据来训练这个网络，所以你只有输入0至30之间时，输出值才较为可靠。而且这个神经网络也只有4个神经元。
@@ -436,7 +432,6 @@ int main() {
 在我们学习神经网络的训练之前，我们要先再巩固一下几个易混淆概念，这些概念如果在网上搜，可以说是结果乱七八糟，其中许多文字或视频中讲解都有问题。我在学习过程中也很受干扰，所以我从头又查阅了许多文献，自己总结了其中用语的规律，绘制了这样一个关系思维导图：
 ![ ](./images/1693654283495.png)
 CNN、RNN其实也算是BP神经网络，但是图中这样写可能更方便一些。其中一些概念我们还没学到，但后面应该会讲到。现在我们已经了解了这些概念中的感知机、神经元、多层感知机MLP。接下来我们将学习如何训练一个神经网络。
-
 
 ## 第三节 训练我们的神经网络
 
@@ -460,6 +455,7 @@ CNN、RNN其实也算是BP神经网络，但是图中这样写可能更方便一
 均方误差MSE，是要求我们不断减小这个误差值，是我们初识神经网络时最常用的代价函数。
 
 MSE的js代码：
+
 ```javascript
 function MSE(out, out_hat){
     err = 0
@@ -473,6 +469,7 @@ console.log(MSE([1,2],[2,2]))//输出0.5
 ```
 
 c++版本：
+
 ```cpp
 #include<iostream>
 #include<vector>
@@ -502,7 +499,7 @@ int main(){
 然而，我们今天学习的似然值，和概率恰好相反。现在，我告诉你，有三种抽奖机：第一种每次共有10个标签，5个是一等奖标签；第二种每次共有10个标签，1个是一等奖标签；第三种每次共有10个标签，没有一等奖标签。我抽了一百次奖，中了8次，那么请问我正在哪台抽奖机上抽奖（中途未换过）？你大概率会回答我：第二种。这是因为，第二种抽奖机在当前抽100次中8次奖的背景或现状下，更符合这个条件，或者正在使用这个抽奖机的可能性更大。统计学中我们称之为：似然值更大。刚刚我们抛开各种晦涩难懂的公式，我们应该已经知道，似然大概是++表达在某个事件已经发生之后，我们再回头去判断这个事件发生的背景最有可能是什么样的++。
 现在回头再看一看公式，应该就没有什么困惑了。
 假设我们不知道一个硬币是否是均质的，并且我们不考虑任何影响较小的物理现象。于是我们设硬币的正面重量占比为θ（读作Theta），反面就是1-θ。我们要求L(θ)即θ的最大似然值，因为我们已讲过似然值最大时该θ是正确的的可能性最大。于是我们开始抛硬币，抛了10次后，2次正面朝下，8次朝上。这时，抛2次硬币全部正面朝下的可能性就是θ的2次方（因为抛一次正面朝下的可能性是θ，而两件事同时发生表现为概率或似然的连乘），而抛8次硬币全部反面朝下的可能性就是1-θ的8次方，而这两个事件又在我们的实验中同时发生了，所以再进行相乘，最终得到
-*L(θ) = (θ^2) * \[(1-θ)^8\]* 
+*L(θ) = (θ^2) * \[(1-θ)^8\]*
 这时，我们只需要找到L(θ)的最大值，就能找到最好的参数θ了。
 
 在神经网络中，当我们数据的真实值是xi而神经网络的预测值是yi时，就可以使用
@@ -528,6 +525,7 @@ xi就是数据真实值了，p是预测值。你可以在这个演示页面的�
 这就是极大似然估计。一些时候为了不出现太多连乘和乘方，也会使用log计算，当然我个人认为次方的写法让人更容易联想到似然值的本质。
 
 MLE的js代码：
+
 ```javascript
 function MLE(out, out_hat){
     likelihood = 1
@@ -541,6 +539,7 @@ console.log(MLE([0,1],[0.3,0.8]))//输出值约0.56
 ```
 
 c++版本：
+
 ```cpp
 #include <iostream>
 #include <cmath>
@@ -569,6 +568,7 @@ https://www.geogebra.org/m/rkx8fy5z
 你可以看一看我的这个演示，拖动参数b的滑动条使红色抛物线的形状越来越接近绿色抛物线的，这时蓝色直线所代表的似然值大小就会开始上升，知道两条抛物线完全重合，似然值来到最高点。你可以去演示的代数区自行研究下其中的原理，这里我就不做过多解释了。
 ![ ](./images/1696408303584.png)
 还有与其相关的一部分代码，我只写了js版本，因为这个东西在MLE中并不是很常用，稍作了解即可（其中涉及的梯度下降法，建议在我们学习完梯度下降法之后再可以有选择性的读一读这段代码）：
+
 ```javascript
 function calculateLikelihood(data) {
   let likelihood = 1;
@@ -584,28 +584,28 @@ function calculateLikelihood(data) {
       [x, y] = data[j];
       yhat = Number(Math.pow(2,x)+b);
       error = y - yhat;
-      
+    
       currLikelihood *= (1 / (sqrt2pi * sigma)) * Math.exp(-0.5 * (error / sigma) ** 2);
     }
-    
+  
     console.error("似然值："+currLikelihood)
-    
+  
     function normalDistributionDerivative(sigma, err) {
         coefficient = 1 / (Math.sqrt(2 * Math.PI) * sigma);
         exponent = (-1 / 2) * Math.pow((err / sigma), 2);
         derivative = coefficient * Math.pow(Math.E, exponent) * (-1 / sigma) * err;
         return derivative;
     }
-    
+  
     d = 0
-    
+  
     for (let j = 0; j < data.length; j++) {
         [x, y] = data[j];
         yhat = Number(Math.pow(2,x)+b);
         error = y - yhat;
         d += normalDistributionDerivative(1, error)
     }
-    
+  
     d = d / data.length
     b -= rate * d
     log("b ← "+b)
@@ -675,6 +675,7 @@ z对x的偏导也是同理：
 由于还没有学习如何准确计算梯度的具体值，所以为了能先体验一下梯度下降法，我们先用求导最基础的方法，给一个微小的增量，在我们的代码中，这个增量是有限小的。
 下面的示例代码中，仅有一个S型神经元，我们要依次通过梯度下降来更新w和b，直到误差满足我们的要求。
 梯度下降法js代码：
+
 ```javascript
 w = 1
 b = 0
@@ -705,30 +706,31 @@ function train(data){
             console.log("Training completed")
             break;
         }
-        
+      
         //分别计算梯度
         w += h
         predict1 = neuron(data[0])
         w -= h
         cost1 = MSE(data[1], predict1)
         gradient_w = (cost1 - cost0) / h
-        
+      
         b += h
         predict1 = neuron(data[0])
         b -= h
         cost1 = MSE(data[1], predict1)
         gradient_b = (cost1 - cost0) / h
-        
+      
         //分别更新权重和偏置
         w -= rate * gradient_w
         b -= rate * gradient_b
-        
+      
         i++
     }
 }
 ```
 
 c++版本：
+
 ```cpp
 #include <iostream>
 #include <cmath>
@@ -748,11 +750,11 @@ void train(double data[]){
     double rate = 0.6;
     double h = 1e-10;
     int i = 0;
-    
+  
     while(true){
         double predict0 = neuron(data[0]);
         double cost0 = MSE(data[1], predict0);
-        
+      
         std::cout << "Training Count: " << i << "\nMSE: " << cost0 << "\n----------" << std::endl;
 
         if(cost0 <= 0.001){
@@ -765,13 +767,13 @@ void train(double data[]){
         w -= h;
         double cost1 = MSE(data[1], predict1);
         double gradient_w = (cost1 - cost0) / h;
-		
+	
         b += h;
         predict1 = neuron(data[0]);
         b -= h;
         cost1 = MSE(data[1], predict1);
         double gradient_b = (cost1 - cost0) / h;
-		
+	
         w -= rate * gradient_w;
         b -= rate * gradient_b;
         i++;
@@ -813,12 +815,12 @@ int main(){
 我们继续将误差反向传播，假设神经元都使用Sigmoid激活函数（后面简写为S(n)），那么其输出的激活值S(n)的导数就是 *S(n)\*(1/S(n))* ，它的证明过程如果你感兴趣可以自己研究一下，但它不是今天的重点，我们还要让误差继续反向传播。
 刚刚式子中的n可以展开为∑i wi\*xi+b ，这时我们已经看到了第一批需要更新的参数，每个w的偏导就是其对应的x的值，而b的偏导则是1，因为它的系数就是1。
 例如，假设输出层某神经元中有一个权重参数w8和偏置参数b6，那么它们的梯度就是：
-*▽w8 
+*▽w8
  = ∂loss/∂w8
  = (∂loss/∂y_hat) \* (∂y_hat/∂n) \* (∂n/∂w8)
  = (y_hat-y) \* S(n)\*(1-S(n)) \* x8*
 
-*▽b6 
+*▽b6
 = ∂loss/∂b6
 = (∂loss/∂y_hat) \* (∂y_hat/∂n) \* (∂n/∂b6)
 = (y_hat-y) \* S(n)\*(1-S(n)) \* 1*
@@ -854,13 +856,12 @@ w←w-▽w\[t\]*
 
 SGD让神经网络的规模性训练由理论变成了可能。现在，我们就可以给出完整的一个神经网络训练和预测的完整的代码了。
 
-
 ## 第四节 完整代码
-
 
 注意：js和c\+\+代码中的e表示的是科学计数法，如1e-5表示1乘以10的-5次方，请注意与常数e区分开，这里和对数没有关系。
 
 js版本：
+
 ```javascript
 //随意初始化神经网络参数
 
@@ -932,7 +933,7 @@ function Neuron(w, x, b) {
 
     }
 
-    
+  
 
     //求和∑wx+b
 
@@ -942,11 +943,11 @@ function Neuron(w, x, b) {
 
     }
 
-    
+  
 
     sum = sigma(w, x, b)//激活前的值
 
-    
+  
 
     return [sum,leakyRelu(sum)];
 
@@ -1000,7 +1001,7 @@ function predict(content){
 
     }
 
-    
+  
 
     //向前传播至输出层
 
@@ -1048,7 +1049,7 @@ function trainNet(dt){
 
     rMEdNA = rMEdN.reduce((acc, curr) => acc + curr, 0) / rMEdN.length
 
-    
+  
 
     //更新输出层权重
 
@@ -1062,7 +1063,7 @@ function trainNet(dt){
 
     }
 
-    
+  
 
     //更新输出层偏置
 
@@ -1072,7 +1073,7 @@ function trainNet(dt){
 
     }
 
-    
+  
 
     //更新隐藏层权重
 
@@ -1086,7 +1087,7 @@ function trainNet(dt){
 
     }
 
-    
+  
 
     //更新隐藏层偏置
 
@@ -1096,7 +1097,7 @@ function trainNet(dt){
 
     }
 
-    
+  
 
     return MSError;
 
@@ -1166,6 +1167,7 @@ console.log(predict([1,0]))//预测结果接近0,1
 ```
 
 c++版本：
+
 ```cpp
 #include <iostream>
 
@@ -1523,9 +1525,7 @@ int main() {
 到了现在，你可能会有感受，使用c\+\+实现神经网络在写代码时可能异常困难，但其计算速度是无可匹敌的。这一点在后续学习中会更为明显，c\+\+中，你需要考虑并仔细设计数据结构、精度与底层资源分配等，这些通常是js、python等语言不需要也不能实现的，然而对于深度神经网络的训练及其重要。令我比较震撼的是，在我为这本书重新编写并测试性地训练一个手写识别神经网络模型时，我先写了js版本方便自己理解，然后找了几款原生js的IDE测试，仅仅10个训练数据一次梯度下降最少耗费1-2分钟，而在VS上运行改写好的c\+\+时，每秒可以完成100多次梯度下降。
 总之，我在本书开头写过，js更贴近数学表达式而且非常简洁，很方便我们理解一些简单概念，而到最后，想要做出真正的大模型（而不消耗太多资源）我们必然需要使用c\+\+。其实c\+\+没有想象中的那样困难和复杂，我经常直接将js代码整段复制到c\+\+编译器中，然后要做的，无非只是引入头文件，做一些定义，再给每个变量定好类型，把js一些函数改成c\+\+对应的，最后根据编译器报错改一改小bug即可。
 
-
 ## 第五节 几个误区（必读）
-
 
 在以上学习中，有几个误区。虽然在学习过程中我们已经提到了，但我还是想专门再集中地强调一下，因为有时候我们太专注于公式和代码，以至于忘记了它的来源，这不利于我们更深刻的学习和理解神经网络与深度学习。
 
@@ -1538,9 +1538,7 @@ int main() {
 
 最后，十分建议你再从头把本章全部带下划线和粗体的字浏览一遍，有助于从全局、整体角度理解神经网络。
 
-
 # 第二章 改进神经网络
-
 
 ## 第一节 更好的算法
 
@@ -1570,6 +1568,7 @@ Leaky ReLU的表达式是：
 ![ ](./images/1698132872218.png)
 橙色是ELU函数图像，紫色是其导数。α与上述作用相似（通常为1）。可以看到，ELU不会导致神经元死亡。同ReLU一样，ELU在输入正常范围（以及全部大于0的范围）内也不会有梯度消失问题，而且Leaky ReLU在α接近1时会接近于直线，因此在复杂的训练中有一定困难。与之相比，ELU显然更加圆滑。ELU具有ReLU的全部优点，虽然小于0的部分的计算量稍大，但仍然不妨碍其成为十分受欢迎的激活函数之一。
 js版本：
+
 ```javascript
 function elu(x) {
     if (x >= 0) {
@@ -1589,6 +1588,7 @@ function elu_derivative(x) {
 ```
 
 c\+\+版本：
+
 ```cpp
 auto elu = [](double x) {
     if (x >= 0) {
@@ -1664,6 +1664,7 @@ log可以把相乘变为相加，即log(A\*B)=log(A)+log(B)，这里的log以谁
 *-t/x + (1-t)/(1-x)*
 
 交叉熵的js代码：
+
 ```javascript
 //交叉熵函数
 function CE(out, out_hat){
@@ -1685,6 +1686,7 @@ function CED(out, out_hat){
 ```
 
 c++版本：
+
 ```cpp
 //交叉熵函数
 double CE(double out, double out_hat){
@@ -1788,7 +1790,7 @@ vector<double> neuron(std::vector<double> w, std::vector<double> x, double b) {
         }
         return sum + b;
     };
-	
+
     double sum = sigma();//激活前的值
     return { sum,elu(sum) };
 
@@ -1799,7 +1801,7 @@ vector<double> S_neuron(std::vector<double> w, std::vector<double> x, double b) 
     auto sigmoid = [](double x) {
         return 1 / (1 + exp(-x));
     };
-	
+
     //求和∑wx+b
     auto sigma = [&w, &x, b]() {
         double sum = 0;
@@ -1868,7 +1870,7 @@ double trainNet(vector<vector<double>> dt) {
         CEError += CE(dt[1][l], out_hat[l]);
     }
     CEError = CEError / dt.size();
-    
+  
     std::vector<double> rMEdN;
     for (int l = 0; l <= out_hat.size() - 1; l++) {
         rMEdN.push_back(rate * CED(dt[1][l], out_hat[l]) * sigmoid_derivative(networkn[1][l]));
@@ -1974,7 +1976,7 @@ int main() {
         {{generateVector(25)},{0.1}}
     }
     };
-	
+
     networkn = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0}
@@ -2139,7 +2141,6 @@ int main() {
 
 你可以增加更多训练数据让它预测更准确，也可以试着用这个框架让它做一些别的事情，比如识别数字、和它玩一些数字游戏让它找规律...
 
-
 ## 第二节 进入多分类的世界
 
 ### 第1框 初识
@@ -2179,6 +2180,7 @@ int main() {
 这是Softmax函数的Geogebra数学动画演示：https://www.geogebra.org/m/gdhw6n9k
 
 以下是Softmax在c++中的代码实现：
+
 ```cpp
 #include <vector>
 #include <cmath>
@@ -2205,7 +2207,6 @@ vector<double> softmax(std::vector<double> input){
 	return out;
 }
 ```
-
 
 ### 第3框 Softmax与多分类交叉熵合并与求导
 
@@ -2283,10 +2284,9 @@ e3 = -t3\*ln(a3)*
 
 我们已经优化了神经网络本身，并加入了多分类。现在，我们已经可以训练一个0-9的手写数字识别模型了。
 由于代码相对较长，就不再书中展示了，请前往[本书所在的Github仓库（https://github.com/VeritNet/AI-Learning）](https://github.com/VeritNet/AI-Learning) ，找到./src/num_predict.cpp 并下载到本地使用c\+\+运行，还需要使用到MNIST数据集，这一个免费的手写数字训练数据资源，其中是许多28\*28像素的手写数字灰度图，其中包含50000个训练数据用于训练我们的神经网络，和10000个测试数据用于训练完成后我们来评估神经网络的训练成果。为了方便，我已经将其中的1000个训练数据和100多个测试数据的灰度数据提取出来，存入到了txt文本文件（我将它们放在了本书所在的Github仓库的./src/data 文件夹下，请直接下载data文件夹并和刚刚的num_predict.cpp放在同级目录下），在该c\+\+代码中有相应函数可以读取出这些数据并解析转换为vector作为神经网络的输入内容。你也可以选择去从[MNIST官方（http://yann.lecun.com/exdb/mnist/）](http://yann.lecun.com/exdb/mnist/) 下载到原数据集并自行写相应代码实现转换，仅需将全部灰度值依次存入vector即可。
-这些代码还没有经过优化，但我们将在后面对其进行优化，所以目前运行起来似乎有一点慢。请自行调整合适的学习率（即代码中的rate变量，在main函数中可以找到），训练时神经网络可能会陷入缓慢期，你可以先设置目标损失值（即代码中的aim变量，也可以在main函数中可以找到）为100左右，将rate设置小一点，比如0.0003，等待训练完成后，代码中的`saveNetwork(network, "./num_predict.bin");`函数可以将神经网络的模型权重、偏置（vector）参数以二进制形式保存到指定路径的.bin文件中，下次想要继续上次的训练时，可以在main函数的开头使用`loadNetwork("./num_predict.bin", network);`直接从文件读取出模型的数据并自动转换赋值到network变量上，作为神经网络所有权重、偏置数据。接下来训练时，我们可以将aim再设小一点，比如10，将rate设大一点，比如0.01，以此类推，直到损失值达到你期望的为止，比如0.001。但不要太小，否则会出现过拟合现象，这一点以后会学习到。
+这些代码还没有经过优化，但我们将在后面对其进行优化，所以目前运行起来似乎有一点慢。请自行调整合适的学习率（即代码中的rate变量，在main函数中可以找到），训练时神经网络可能会陷入缓慢期，你可以先设置目标损失值（即代码中的aim变量，也可以在main函数中可以找到）为100左右，将rate设置小一点，比如0.0003，等待训练完成后，代码中的 `saveNetwork(network, "./num_predict.bin");`函数可以将神经网络的模型权重、偏置（vector）参数以二进制形式保存到指定路径的.bin文件中，下次想要继续上次的训练时，可以在main函数的开头使用 `loadNetwork("./num_predict.bin", network);`直接从文件读取出模型的数据并自动转换赋值到network变量上，作为神经网络所有权重、偏置数据。接下来训练时，我们可以将aim再设小一点，比如10，将rate设大一点，比如0.01，以此类推，直到损失值达到你期望的为止，比如0.001。但不要太小，否则会出现过拟合现象，这一点以后会学习到。
 我还写了一个html手写板小工具，你可以直接打开它并手写一个数字，数字的灰度图会立即显示在下方输入框中，你可以将这些文本灰度数据复制，在你的num_predict.cpp所在位置再创建一个文本文件，并将刚刚复制的数据粘贴到其中，最后在num_predict.cpp的main函数代码中，使用预测你的手写数字的那一行代码，将“your_data_path.txt”替换为你刚刚创建的文本文件名，运行程序（训练好的神经网络）即可预测你写的数字是几（打印在控制台的输出是一个向量，向量的第一个数是“数字为0”的预测概率，以此类推）。该文件在 ./src/num.html 位置。
 我训练好的模型放在了仓库的 ./src/num_predict.bin 位置，你也可以使用该模型测试手写数字识别。
-
 
 ## 第三节 优化代码：多线程与CPU指令集
 
@@ -2294,10 +2294,7 @@ e3 = -t3\*ln(a3)*
 我们使用数据并行原理，使用**小批量随机梯度下降法（MSGD / Mini-batch Stochastic Gradient Descent）**，即在之前所学的SGD的基础上，一次反向传播多个数据，针对每一个神经网络参数，把每个数据算出来的该参数的梯度求和或平均，在用它来更新这个参数。我们创建一个线程池，让每个线程领取相应的一个数据的反向传播任务，该线程完成任务后，会将算出的所有梯度值返回给主线程，主线程等待所有其它线程都完成各自的梯度计算任务后，再统一更新模型参数。
 这里以SSE2指令集为例，代码位于仓库的 ./src/num_predict_fast.cpp 位置，你还需要把 ./src/fast.h 也和该cpp文件放在一起，因为fast.h中包含了num_predict_fast.cpp所要使用的SSE2指令集运算函数。
 
-
-
 # 结语
-
 
 在第一册书中，你已经初步学习了神经网络，并且非常深刻地理解了它的本质和设计原理，并据此对其进行改进，最终投入简单的实践。在下一册书中，我们将接触深度学习领域，看到基于神经网络所开发出的更加强大的模型，并逐步将数学理论变为真正的工程实践，服务你所需要的领域，或探索未知的新事物。
 
