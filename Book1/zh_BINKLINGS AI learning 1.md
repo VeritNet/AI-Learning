@@ -1,29 +1,12 @@
----
-title: BINKLINGS AI learning 第一册
----
-# 版权
+[在Note上更好地在线阅读](https://www.veritnet.com/article?type=Learn&page=Book1) [本书开源仓库地址为](https://github.com/VeritNet/AI-Learning) [官网网址](http://www.veritnet.com/)
 
-本书开源仓库地址为 https://github.com/VeritNet/AI-Learning
-官网网址 http://ai.binklings.com/
-
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">BINKLINGS AI learning</span> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
-BINKLINGS AI learning © 2023 is licensed under CC BY-NC-SA 4.0. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/
-
-# 目录
-
-[toc!]
-
-# 关于作者
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">BINKLINGS AI learning © 2023-2024</span> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/
 
 官网：BINKLINGS.com
-   或 ai.binklings.com
-Bilibili空间：https://b23.tv/39Ke15n
-Youtube频道：https://www.youtube.com/@BINKLINGS
-欢迎加入QQ群讨论 653703128
+   或 VeritNet.com
+[Bilibili空间](https://b23.tv/39Ke15n) [Youtube频道](https://www.youtube.com/@BINKLINGS) 欢迎加入QQ群讨论 653703128
 
 <h3 style="color: blue">Knowledge sharing for mutual benefits.🎉🎉🎉</h3>
-
-`<a href="https://afdian.net/a/binklings"><img width="200" src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.jpg" alt="">``</a>`
 
 # 前言
 
