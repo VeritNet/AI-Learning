@@ -1,3 +1,19 @@
+# Start Learning BINKLINGS AI Learning
+
+[BINKLINGS AI Learning Book 1](./en_BINKLINGS%20AI%20learning%201.md)
+
+You can choose to download this repository or [read better online on Note](https://www.veritnet.com/article?type=Learn&page=Book1).
+
+In Book 1, you will initially learn about neural networks and gain a profound understanding of their essence and design principles. Based on this, you will explore improvements and eventually apply them in simple practical scenarios.
+
+This book is an open-source free book hosted on GitHub. If you have any questions while reading, feel free to contact the author via email, X, YouTube, or discuss in this repository or other related venues. You are welcome to cite this book for academic or other purposes using the open-source URL of the book. For partial reproduction (non-commercial purposes and adhering to CC BY-NC-SA 4.0), no separate permission from the author is required. We hope the content of this book proves helpful to you.
+
+<b>
+Official Website: BINKLINGS.com or VeritNet.com
+Bilibili Space: https://b23.tv/39Ke15n
+YouTube Channel: https://www.youtube.com/@BINKLINGS
+</b>
+
 # 开始学习 BINKLINGS AI Learning
 
 [BINKLINGS AI Learning 第一册](./zh_BINKLINGS%20AI%20learning%201.md)
@@ -14,4 +30,5 @@ Youtube频道：https://www.youtube.com/@BINKLINGS
 欢迎加入QQ群讨论 653703128
 </b>
 
+<h5 style="color: orange">Thanks to all authors who freely share knowledge in the field of machine learning on the internet or through other means.</h5>
 <h5 sytle="color: orange">感谢所有在网络或其它途径上在机器学习领域免费共享知识的作者。</h5>
