@@ -276,22 +276,7 @@ int main() {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0}
     };
-    
-    /*训练完成后预测时使用以下代码
-    loadNetwork("./num_predict.bin", network);
-    //以下代码用于预测测试数据集
-    for (int dt0 = 0; dt0 <= 9; dt0++) {
-        cout << "----------" << dt0 << "----------" << endl;
-        for (int dt1 = 0; dt1 <= 10; dt1++) {
-            pv(predict(getData("./data/testing/" + to_string(dt0) + "/" + to_string(dt1) + ".txt")));
-        }
-    }
-    //以下代码用于预测你手写的数字
-    pv(predict(getData("./your_data_path.txt")));
-    */
 
-    //训练神经网络使用以下代码，预测时删掉以下代码
-    cout << "1/3 Generate Vector" << endl;
     network = {
         {
             {generateVector(784), {0}},
@@ -338,6 +323,22 @@ int main() {
             {generateVector(30), {0}}
         }
     };
+    
+    /*训练完成后预测时使用以下代码
+    loadNetwork("./num_predict.bin", network);
+    //以下代码用于预测测试数据集
+    for (int dt0 = 0; dt0 <= 9; dt0++) {
+        cout << "----------" << dt0 << "----------" << endl;
+        for (int dt1 = 0; dt1 <= 10; dt1++) {
+            pv(predict(getData("./data/testing/" + to_string(dt0) + "/" + to_string(dt1) + ".txt")));
+        }
+    }
+    //以下代码用于预测你手写的数字
+    pv(predict(getData("./your_data_path.txt")));
+    */
+
+    //训练神经网络使用以下代码，预测时删掉以下代码
+    cout << "1/3 Generate Vector" << endl;
     rate = 0.0015;//学习率
     aim = 1;//目标损失值
     std::vector<std::vector<std::vector<double>>> training_data;
