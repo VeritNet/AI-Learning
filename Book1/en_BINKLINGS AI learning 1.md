@@ -12,7 +12,7 @@
 
 Here's a guide to common symbols and fonts used in this book:
 
-**Bold:** **Important terms (Full English name / English abbreviation / Full Chinese name)**
+**Bold:** **Important terms (Full English name / English abbreviation)**
 *Italics:* *Mathematical formulas a+b=c*
 Code blocks:
 
