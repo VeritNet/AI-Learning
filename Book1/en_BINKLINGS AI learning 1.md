@@ -59,7 +59,7 @@ xxxxxx.push_back(3.0);
 Whether you are an elementary school student or a graduate student, this book is suitable for you. This book introduces some advanced mathematical knowledge, but you need to be prepared with the following:
 
 - Basic knowledge of functions (required content in junior high school textbooks)
-- Basic knowledge of derivatives (3Blue1Brown's explanation of derivatives is excellent, I suggest you watch his series of videos: Official English on YouTube: https://www.3blue1brown.com/topics/calculus, Official bilingual subtitles on Bilibili: https://space.bilibili.com/88461692/channel/seriesdetail?sid=1528931. Please use the desktop version of the website or the Bilibili app to open the latter to see the complete video list).
+- Basic knowledge of derivatives (3Blue1Brown's explanation of derivatives is excellent, I suggest you watch his series of videos: YouTube: https://www.3blue1brown.com/topics/calculus.
 - At least one programming language (recommended: C++, preferably with some knowledge of JavaScript). 
 
 # Chapter 1 Introduction to Neural Networks
@@ -2400,7 +2400,7 @@ For demonstration, we'll use the SSE2 instruction set.  The code is located at .
 
 In this first book, you've gained a foundational understanding of neural networks, delved into their design principles, explored improvements, and engaged in practical implementations.  In the next book, we'll venture into deep learning, exploring more powerful models built upon neural networks, and progressively bridge the gap between mathematical theory and real-world engineering applications to address your specific needs or explore new frontiers.
 
-This book is open-source and freely available on GitHub.  If you have any questions, feel free to contact the author via email, YouTube, or QQ (for readers in mainland China).  You can also engage in discussions within the repository or other relevant platforms.
+This book is open-source and freely available on GitHub.  If you have any questions, feel free to contact the author via email, YouTube.  You can also engage in discussions within the repository or other relevant platforms.
 
 You're welcome to cite this book for academic or other purposes through its GitHub URL.  For non-commercial use and adherence to the CC BY-NC-SA 4.0 license, you're free to reproduce parts of the content without explicit permission.  I hope this book has been helpful in your learning journey.
 
