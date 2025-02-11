@@ -1,6 +1,6 @@
-# Start Learning BINKLINGS AI Learning
+# Start Learning
 
-[BINKLINGS AI Learning Book 1](./en_BINKLINGS%20AI%20learning%201.md)
+[Book 1](./en_BINKLINGS%20AI%20learning%201.md)
 
 You can choose to download this repository or [read better online on Note](https://www.veritnet.com/article?type=Learn&page=Book1_en).
 
@@ -14,9 +14,9 @@ Bilibili Space: https://b23.tv/39Ke15n
 YouTube Channel: https://www.youtube.com/@BINKLINGS
 </b>
 
-# 开始学习 BINKLINGS AI Learning
+# 开始学习
 
-[BINKLINGS AI Learning 第一册](./zh_BINKLINGS%20AI%20learning%201.md)
+[第一册](./zh_BINKLINGS%20AI%20learning%201.md)
 你可以选择下载本仓库，或[在Note上更好地在线阅读](https://www.veritnet.com/article?type=Learn&page=Book1_zh)
 
 在第一册书中，你将初步学习神经网络，并且非常深刻地理解了它的本质和设计原理，并据此对其进行改进，最终投入简单的实践。
